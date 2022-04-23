@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <map>
 #include <set>
 #include <vector>
@@ -101,9 +100,10 @@ vector<string> lexnucl (int num, int k)
 
 const char* convTab (map<string,string> &mp)
 {
-    string tab = "<thead><tr><th>mn-mer</th><th>Prob.</th></thead>\n";
+    string tab = "<thead><tr><th>mn-mer</th><th>Prob.</th></thead>\n<tbody>\n";
     for (auto p: mp)
         tab += "<tr><td>" + p.first + "</td><td>" + p.second + "</td></tr>\n";
+    tab += "</tbody>\n";
 
     const char* ctab = tab.c_str();
 
