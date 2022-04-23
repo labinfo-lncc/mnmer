@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap 5 Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
+  
+</head>
+<body>
+
+<div class="container-fluid p-5 bg-primary text-white text-center">
+  <h1>m,n-mer</h1>
+  <p>Updating k-mers approach</p> 
+</div>
+  
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h3>Sequence:</h3>
+      <div class="row">
+        <div class="col-sm-2">
+          <p id="ex1"><a href="#" onclick="example1()">#Example 1</a></p>
+        </div>
+        <div class="col-sm-2">
+          <p id="ex2" ><a href="#" onclick="example2()">#Example 2</a></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <textarea class="form-control" rows="10" id="seq" name="text"></textarea>
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text">m</span>
+            <input type="text" id="m" class="form-control" value="3">
+          </div>          
+        </div>
+        <div class="col-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text">n</span>
+            <input type="text" id="n" class="form-control" value="2">
+          </div>          
+        </div>
+        <div class="col-6"></div>
+        <div class="col-2">
+          <button type="button" class="btn btn-primary" onclick="calcmnmer()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="dashed">
+  <div id="idseq" class="row"></div>
+  <div id="tabdiv" class="row">
+    <table class="table" id="mntab">
+    </table> 
+  </div>
+</div>
+</body>
+<script>
+  function example1()
+  {
+    document.getElementById("seq").value = ">Example_1\nTCACATCTTTTCAGTCAACTAATCGGAGATACCTATGATGGCGACATCACGAAAGAATGCAACATCGTTTCCTTCAGAGACGCTGTTCGTCGTTTCTATCCCAGTGGTGTTTGCTTTTATGGTGGTGACGTCGCTACCGCTGCTGACAACACTGCACTCGACTGTCCCATGCTTTCTAACTTGATTTCATGGGAAATTCTGTTGAGTTGCGTTGTTCTCAGGGAAGGTGGTGATGCCTATTTCAAGGTCTTCGATCTTCTATCGGACAACATGCCGAAAAATGTCGAATTCCTTGTCAGTGTCTACGAGAAAGTTGAAATCGTAAAACTCGAAACCTCGCGCTCAGCATCCACCGAACTTCATCTGATCTGCACTGGGTTTAAACTATCGAACGAAACACCGATCGATTGCTACAATTACCTGCTGCAAGATAACGAGATCGTCGCCTCTCCTGTCATAATGAATCACCTCATGCATGCCCAAAAACTGATCGACTTGCATATCATGACTGGTCTCAGAGAGTATCGCAGGTGCTTCAACACGGCAGGTGAGAATAACGAACACGTTAACAGATTTCCGCTGGAAAAAATTGAAGGCTATCGCAACGTTCTCTGTCTGCCTCAACGCATATCAGCTGGAGGAATTGTGGAAGGTGTTAAACGCACTTTTCGCAGTATCTACACGATGTCCGTTGTGAAGAGAGATTTCGATTCTGAACTGAGAAATTACGAATATGTCGTCGAAAGAGTCGTTCCCCCGAAACCCGCCGTCACCTCGTCTGCGCCCACCCCTATCATCCACCGTGCTCTCTCCGCTGAAAATTTGCTGGCGTTGGAGATCCCCGTCGCTGAACCTGTCCCTGGACTGTTTCAATCTGTCGTAAAAGCGTTTGTCACCCAAAAACCAAATTTCGAAGAATCGACTGAGAAAGATCGTACTTTCACAGTCATGGGTCAAACGGGTAACACAGGAATCACCAACATCAGCGAACCGTTCCACA";
+  }
+  function example2()
+  {
+    document.getElementById("seq").value = ">Example_2\nAAGAGGCTATGGAAATAATAAAGAAGTTCAAGAAAGATCTGGCTGCCATGCTGAGAATAATCAATGCTAGGAAGGAGAAGAAGAGACGAGGCGCAGATACTAGTGTCGGAATTGTTGGCCTCCTGCTGACCACAGCTATGGCAGCGGAGGTCACTAGACGTGGGAGTGCATACTACATGTACTTGGACAGAAACGATGCTGGGGAGGCCATATCTTTCCCAACCACATTGGGGATGAATAAGTGTTATATACAGATCATGGATCTTGGACACATGTGTGATGCCACCATGAGCTATGAATGCCCTATGCTGGATGAGGGGGTGGAACCAGATGACGTCGATTGTTGGTGCAACACGACGTCAACTTGGGTTGTGTACGGAACCTGCCATCACAAAAAAGGTGAAGCACGGAGATCTAGAAGAGCTGTGACGCTCCCCTCCCATTCCACTAGGAAGCTGCAAACGCGGTCGCAAACCTGGTTGGAATCAAGAGAATACACAAAGCACTTGATTAGAGTCGAAAATTGGATATTCAGGAACCCTGGCTTCGCGTTAGCAGCAGCTGCCATCGCTTGGCTTTTGGGAAGCTCAACGAGCCAAAAAGTTATATACTTGGTCATGATACTGCTGATTGCCCCGGCATACAGCATCAGGTGCATAGGAGTCAGCAATAGGGACTTTGTGGAAGGTATGTCAGGTGGGACTTGGGTTGATGTTGTCTTGGAACATGGAGGCTGTGTCACCGTAATGGCACAGGACAAACCGACTGTCGACATAGAGCTGGTTACAACAACAGTCAGCAACATGGCGGAGGTAAGATCCTACTGCTATGAGGCATCAATATCAGACATGGCTTCGGACAGCCGCTGCCCAACACAAGGTGAAGCCTACCTTGACAAGCAATCAGACACTCAATATGTCTGCAAAAGAACGTTAGTGGACAGAGGCTGGGGAAATGGATGTGGACTTTTTGGCAAAGGGAGCCTGGTGACATGCGCTAA";
+  }
+</script>
+
+<script src="mnmer.js"></script>
+<script>
+//Calculate mnmer
+  function calcmnmer()
+  {
+    let fas = document.getElementById("seq").value;
+    if (!fas){
+      return false;
+    }
+
+    let iid = fas.split('\n')[0];
+    let sseq = fas.split('\n')[1];
+
+//Webassembly import
+      const api = {
+        mnmer: Module.cwrap ("mnmer", "string", ["string","number","number"])
+    };
+
+    let m = Number(document.getElementById ("m").value);
+    let n = Number(document.getElementById ("n").value);
+
+    let htab = api.mnmer (sseq, m, n);
+
+    document.getElementById("idseq").innerHTML = "<h3>" + iid + "</h3>";
+    document.getElementById("mntab").innerHTML = htab;
+  }
+</script>
+
+
+</html>
+
