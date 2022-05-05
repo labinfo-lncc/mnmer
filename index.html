@@ -21,6 +21,9 @@
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
 	<script src='https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js'></script>
 	<script src='https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js'></script>
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 </head>
 <body>
 
@@ -72,6 +75,11 @@
     <table class="table" id="mntab">
     </table> 
   </div>
+
+  <hr class="dashed">
+
+  <div id="divgrap" style="width:1200px;height:800px;"></div>
+
 </div>
 
 <footer>
@@ -96,6 +104,7 @@
 <script src="mnmer.js"></script>
 <script>
   var tab;
+
 //Calculate mnmer
   function calcmnmer()
   {
@@ -124,6 +133,8 @@
     document.getElementById("idseq").innerHTML = "<h3>" + iid + "</h3>";
     document.getElementById("mntab").innerHTML = htab;
 
+
+
  //Datatables   
     tab = $('#mntab').DataTable ({
         dom: 'Bfrtip',
@@ -134,7 +145,79 @@
         ]
     });
 
+    let el = document.createElement( 'html' );
+    el.innerHTML = "<html><body><table>" + htab + "</table></body></html>";
+    let tb = el.getElementsByTagName("table")[0];
+
+    let dict = {};
+    let arr;
+    let dm = {};
+    let dn = {};
+    let jn = 0, jm = 0;
+
+    for (let i = 0; i < tb.rows.length; i++){
+      arr = tb.rows.item(i).cells[0].innerHTML.split (" | ");
+      if (dn[arr[0]] === undefined){
+        dn[arr[0]] = jn;
+        ++jn;
+      }
+      if (dm[arr[1]] === undefined){
+        dm[arr[1]] = jm;
+        ++jm;
+      }
+    }
+
+    for (const key of Object.keys(dn)){
+      console.log (key + " : " + dn[key]);
+    }
+
   }
+
+
+
+
+//Plotly 
+Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv', function(err, rows){
+function unpack(rows, key) {
+  return rows.map(function(row) { return row[key]; });
+}
+
+var z_data=[ ]
+for(i=0;i<24;i++)
+{
+  z_data.push(unpack(rows,i));
+}
+
+
+var data = [{
+           z: z_data,
+           type: 'surface',
+           contours: {
+            z: {
+              show:true,
+              usecolormap: true,
+              highlightcolor:"#42f462",
+              project:{z: true}
+            }
+          }
+        }];
+
+var layout = {
+  title: 'm vs n vs prob',
+  autosize: false,
+  width: 600,
+  height: 600,
+  margin: {
+    l: 65,
+    r: 50,
+    b: 65,
+    t: 90,
+  }
+};
+Plotly.newPlot('divgrap', data, layout);
+});
+
+
 </script>
 
 </html>
