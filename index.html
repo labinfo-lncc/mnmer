@@ -149,47 +149,44 @@
     el.innerHTML = "<html><body><table>" + htab + "</table></body></html>";
     let tb = el.getElementsByTagName("table")[0];
 
-    let dict = {};
     let arr;
-    let dm = {};
-    let dn = {};
-    let jn = 0, jm = 0;
+    let dmat = {};
+    let sm = new Set();
+    let sn = new Set();
+    let zz;
 
-    for (let i = 0; i < tb.rows.length; i++){
+
+    for (let i = 1; i < tb.rows.length; i++){
       arr = tb.rows.item(i).cells[0].innerHTML.split (" | ");
-      if (dn[arr[0]] === undefined){
-        dn[arr[0]] = jn;
-        ++jn;
-      }
-      if (dm[arr[1]] === undefined){
-        dm[arr[1]] = jm;
-        ++jm;
-      }
+      sm.add (arr[0]);
+      sn.add (arr[1]);
     }
 
-    for (const key of Object.keys(dn)){
-      console.log (key + " : " + dn[key]);
+    for (let i = 1; i < tb.rows.length; i++){
+      arr = tb.rows.item(i).cells[0].innerHTML.split (" | ");
+      zz = parseFloat(tb.rows.item(i).cells[1].innerHTML);
+      
+      dmat[arr[0] + arr[1]] = zz;
     }
 
-  }
+    let itm = sm.values();
+    let mat = [];
 
+    for (let em of itm){
+      let aux = [];
+      let itn = sn.values();
+      for (let en of itn){
+        if ((em+en) in dmat)
+          aux.push(dmat[em+en]);
+        else
+          aux.push(0.0);
+      }
+      mat.push(aux);
+    }
 
+    let z_data = mat;
 
-
-//Plotly 
-Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv', function(err, rows){
-function unpack(rows, key) {
-  return rows.map(function(row) { return row[key]; });
-}
-
-var z_data=[ ]
-for(i=0;i<24;i++)
-{
-  z_data.push(unpack(rows,i));
-}
-
-
-var data = [{
+    var data = [{
            z: z_data,
            type: 'surface',
            contours: {
@@ -215,7 +212,9 @@ var layout = {
   }
 };
 Plotly.newPlot('divgrap', data, layout);
-});
+
+  }
+
 
 
 </script>
