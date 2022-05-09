@@ -149,12 +149,12 @@
     el.innerHTML = "<html><body><table>" + htab + "</table></body></html>";
     let tb = el.getElementsByTagName("table")[0];
 
+//Graphics 3D
     let arr;
     let dmat = {};
     let sm = new Set();
     let sn = new Set();
     let zz;
-
 
     for (let i = 1; i < tb.rows.length; i++){
       arr = tb.rows.item(i).cells[0].innerHTML.split (" | ");
