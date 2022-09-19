@@ -1,4 +1,4 @@
-![image-20220908153252560](/home/amanda/.config/Typora/typora-user-images/image-20220908153252560.png)
+![logo](https://user-images.githubusercontent.com/57667417/191082345-57fed066-37e9-4a8a-a65a-c9562d0625a4.png)
 
 # Conditional frequency distribution
 
@@ -7,22 +7,20 @@ The (m,n)-mer R package was created to summarize biological data into numerical 
 (m,n)-mers are an alternative case of k-mers (Figure 1). We proposed the replacement of the unconditional k-mer frequency 
 by the conditional frequency, which represents the relative frequency of the n-mer conditioned to the relative frequency of m-mer plus n-mer (for more details and performance comparisson please see Andrade et al., 2022 (in press)). 
 
-<img src="/home/amanda/.config/Typora/typora-user-images/image-20220908154630665.png" alt="image-20220908154630665" style="zoom:67%;" />
+![Fig1](https://user-images.githubusercontent.com/57667417/191081859-0b0ae464-f257-4c82-9dea-8d4629605357.png)
 
 **Fig 1.** Comparing k-mer to mn-mer relative frequency.
 
 According to Figure 2, the k-mers are represented as (0,k) and the mn-mers as (m,n).
 
-<img src="/home/amanda/.config/Typora/typora-user-images/image-20220908160359290.png" alt="image-20220908160359290" style="zoom:67%;" />
+![Fig2](https://user-images.githubusercontent.com/57667417/191081936-1aed5ca6-9c88-4d4d-a46b-e1ccae0bcafe.png)
 
 **Fig 2.** Numeric representation.
 
 The output table (Figure 3) includes the fasta file accession numbers as an ID column, the relative frequency of mn-mers up to 4k columns, and class information. 
 
-<img src="/home/amanda/.config/Typora/typora-user-images/image-20220908153711469.png" alt="image-20220908153711469" style="zoom:67%;" />
-
+![Fig3](https://user-images.githubusercontent.com/57667417/191082016-b6835c4c-c115-498d-a2d1-c7d93ec20fe5.png)
 **Fig 3.** Output example.
-
 
 
 ## Dependencies
