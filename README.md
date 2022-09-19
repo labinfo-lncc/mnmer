@@ -42,21 +42,9 @@ devtools::install_github("labinfo-lncc/mnmer", ref="main")
 ```
 library("mnmer")
 ```
-
-#### Summary
-
-Function to summarize base content, including N and IUPAC bases
-
-#### Filtering sequences
-
-Function to remove sequences with a certain content of non informative bases and length 
-
 #### Producing k-mers
 
 #### Producing (m,n)-mers 
-
-Other features: paralelism, optimize memory use, read fasta in blocks and zipped
-
 
 
 ## Citation
