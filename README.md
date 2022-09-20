@@ -46,18 +46,20 @@ library("mnmer")
 
 Assume we need to distinguish between viruses detected in mosquito samples and viruses that exclusively infect plants. The mn function generates the feature matrix using conditional probability from the datasets mosquito vir.fasta and plant vir.fasta. This function can generate both k-mers and mn-mers.
 
-The parameter ```k``` is set to choice for k-mer generation, while the parameter ```m``` is set to zero. Considering that the k-mers are conditioned to zero bases. The ```k``` and ```m``` parameters are chosen by the user for mn-mer creation. For instance, ```k = 2``` and ```m = 1``` yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
-
 #### Producing k-mers
 
+The parameter ```k``` is set to choice for k-mer generation, while the parameter ```m``` is set to zero. Considering that the k-mers are conditioned to zero bases.
+
 ```
-Code Here
+./nmmercpp -f mosquito_vir.fasta -k 2 -m 0 ; mv matrix_*.csv mosquito.csv
 ```
 
 #### Producing (m,n)-mers 
 
+The ```k``` and ```m``` parameters are chosen by the user for mn-mer creation. For instance, ```k = 2``` and ```m = 1``` yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
+
 ```
-Code Here
+./nmmercpp -f plant_vir.fasta -k 2 -m 1 ; mv matrix_*.csv plant.csv
 ```
 
 The outputs are written into mosquito.csv and plant.csv files.
