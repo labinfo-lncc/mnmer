@@ -1,4 +1,7 @@
-mnmer <- function (file)
+mnmer <- function (file, k, m)
 {
-	code
+	ctab <- .Call ("cmnmer", file, k, m)
+	tab <- read.csv (text=ctab, header=T)
+
+	return (tab)
 }

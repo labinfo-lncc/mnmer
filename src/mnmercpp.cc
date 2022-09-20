@@ -144,7 +144,7 @@ void save_string (string &res, string rname, vector<string> &vp, map<string,floa
 
 extern "C" {
 
-SEXP nmmer (SEXP filename, SEXP kk, SEXP mm)
+SEXP cmnmer (SEXP filename, SEXP kk, SEXP mm)
 {
     string infile = CHAR(STRING_ELT(filename,0));
 
