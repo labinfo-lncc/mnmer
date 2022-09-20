@@ -52,6 +52,7 @@ The parameter ```k``` is set to choice for k-mer generation, while the parameter
 
 ```
 ./nmmercpp -f mosquito_vir.fasta -k 2 -m 0 ; mv matrix_*.csv mosquito.csv
+./nmmercpp -f plant_vir.fasta -k 2 -m 0 ; mv matrix_*.csv plant.csv
 ```
 
 #### Producing (m,n)-mers 
@@ -59,12 +60,13 @@ The parameter ```k``` is set to choice for k-mer generation, while the parameter
 The ```k``` and ```m``` parameters are chosen by the user for mn-mer creation. For instance, ```k = 2``` and ```m = 1``` yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
 
 ```
+./nmmercpp -f mosquito_vir.fasta -k 2 -m 1 ; mv matrix_*.csv mosquito.csv
 ./nmmercpp -f plant_vir.fasta -k 2 -m 1 ; mv matrix_*.csv plant.csv
 ```
 
 The outputs are written into mosquito.csv and plant.csv files.
 
-For classification outside of the mnmer program, we utilize the feature matrices. Here's a real-world example of code:
+For classification outside of the mnmer program, we utilize the (1,1)-mer feature matrices. Here's a real-world example of code:
 
 ```
 
