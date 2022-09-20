@@ -64,7 +64,7 @@ The ```k``` and ```m``` parameters are chosen by the user for mn-mer creation. F
 ./nmmercpp -f plant_vir.fasta -k 2 -m 1 ; mv matrix_*.csv plant.csv
 ```
 
-The outputs are written into mosquito.csv and plant.csv files.In this version, all non informative bases (Ns and IUPACs) are ignored.
+The outputs are written into mosquito.csv and plant.csv files. Bases other than A, C, T, and G were disregarded.
 
 For classification outside of the mnmer program, we utilize the (1,1)-mer feature matrices. Here's a real-world example of code:
 
