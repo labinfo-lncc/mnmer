@@ -1,10 +1,11 @@
-#include <iostream>
 #include <fstream>
 #include <map>
 #include <set>
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <R.h>
+#include <Rdefines.h>
 
 using namespace std;
 
@@ -124,40 +125,31 @@ vector<string> lexnucl (int num, int k)
 }
 
 
-void save_file (ofstream &fo, string rname, vector<string> &vp, map<string,float> &mpta)
+void save_string (string &res, string rname, vector<string> &vp, map<string,float> &mpta)
 {
     map<string,float>::iterator it;
 
-    fo <<rname <<flush;
+    res += rname;
     
     for (auto p: vp)
         if ((it=mpta.find (p)) != mpta.end())
-            fo <<',' <<it->second <<flush;
+            res += ',' + to_string(it->second);
         else
-            fo <<",0.0" <<flush;
-        fo <<endl;
-
-
+            res += ",0.0";
+    
+    res += "\n";
 }
 
 
-int main (int argc, char* argv[])
+
+extern "C" {
+
+SEXP cmnmer (SEXP filename, SEXP kk, SEXP mm)
 {
-    if (argc != 7) { cout <<"nmmercpp -f <fasta file> -k <number> -m <number>" <<endl; return 0; }
+    string infile = CHAR(STRING_ELT(filename,0));
 
-    int k, m;
-    string infile;
-
-    for (int j = 1; argv[j] != NULL; ++j)
-        if (string(argv[j]) == "-f")
-            infile = argv[++j];
-        else if (string(argv[j]) == "-k")
-            k = atoi(argv[++j]);
-        else if (string(argv[j]) == "-m")
-            m = atoi(argv[++j]);
-
-
-    if (k <= m) { cout <<"Erro in k value. It is equal or greater than m" <<endl; return 0; }
+    int k = asInteger (kk); 
+    int m = asInteger (mm);
 
 //Get the lexicography of the 4 nucloetide
     vector<string> vp4 = lexnucl(pow(4,k), k);
@@ -166,26 +158,25 @@ int main (int argc, char* argv[])
     vector<pair<string,string>> vseqs = get_seqs (infile);
 
 //Result
-    ofstream fo ("matrix_nmmer_" + to_string(k-m) + "_" + to_string(m) + ".csv");
+    string result = "seqid";
 //Header
-    fo <<"seqid" <<flush;
     for (auto h: vp4)
-        fo <<',' <<h <<flush;
-    fo <<endl;
+        result += ',' + h;
+    result += "\n";
 
-
-#pragma omp parallel for
     for (int i = 0; i < vseqs.size(); ++i){
         map<string,float> mtab = get_mmers (k, m, vseqs[i].second);
 
-#pragma omp critical 
-        save_file (fo, vseqs[i].first, vp4, mtab);
-
+        save_string (result, vseqs[i].first, vp4, mtab);
     }
 
-    fo.close();
+    SEXP Stab = allocVector(STRSXP, result.size());
 
-    cout <<"OK" <<endl;
+    PROTECT (Stab);
+    Stab = mkString(result.c_str());
+  	UNPROTECT(1);
 
-    return 0;
+    return Stab;
+}
+
 }
