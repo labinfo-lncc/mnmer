@@ -49,7 +49,9 @@ Assume we need to distinguish between viruses detected in mosquito samples and v
 
 #### Producing (m,n)-mers 
 
-For classification outside of the mnmer program, we utilize the feature matrices mosquito.csv and plant.csv. Here's a real-world example of code:
+The outputs are written into mosquito.csv and plant.csv files.
+
+For classification outside of the mnmer program, we utilize the feature matrices. Here's a real-world example of code:
 
 ```
 
