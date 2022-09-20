@@ -42,10 +42,50 @@ devtools::install_github("labinfo-lncc/mnmer", ref="main")
 ```
 library("mnmer")
 ```
+
+Assume we need to distinguish between viruses detected in mosquito samples and viruses that exclusively infect plants. The mn function generates the feature matrix using conditional probability from the datasets mosquito vir.fasta and plant vir.fasta. This function can generate both k-mers and mn-mers.
+
 #### Producing k-mers
 
 #### Producing (m,n)-mers 
 
+For classification outside of the mnmer program, we utilize the feature matrices mosquito.csv and plant.csv. Here's a real-world example of code:
+
+```
+
+library(data.table)
+library(caret)
+
+ctrl <- trainControl(method="repeatedcv", number=10, repeats=3)
+mos <- fread(file="mosquito.csv", header=T, stringsAsFactors = T, sep=",")
+classes <- replicate(nrow(mos), "mosquito.vir")
+r2 <- cbind(mos,classes)
+plant <- fread(file="plant.csv", header=T, stringsAsFactors = T, sep=",")
+classes <- replicate(nrow(plant), "plant.vir")
+r1 <- cbind(plant,classes)
+
+subseq <- rbind(r1,r2)
+subseq <- subset(subseq, select = -c(seqid))
+train_index <- createDataPartition(subseq$classes, p=0.8, list=FALSE)
+train <- subseq[train_index, ]
+test <- subseq[-train_index, ]
+control <- trainControl(method="cv", summaryFunction=twoClassSummary, classProbs=T, savePredictions = T)
+roc <- train(classes ~ ., data=train, method="rf", preProc=c("center"), trControl=control)
+
+```
+
+This classification produces the ROC curve and metrics shown below:
+
+
+![Rplot01](https://user-images.githubusercontent.com/57667417/191288837-2f13cee0-96f8-48fb-a4e0-e7e28d832efe.png)
+
+
+Metrics | Value
+--- | ---
+AUC | 1.00000
+ROC | 0.99969
+Sensibility | 0.97000
+Specificity | 0.9980
 
 ## Citation
 
