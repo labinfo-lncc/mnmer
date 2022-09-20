@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <map>
 #include <set>
@@ -134,10 +133,11 @@ void save_string (string &res, string rname, vector<string> &vp, map<string,floa
     
     for (auto p: vp)
         if ((it=mpta.find (p)) != mpta.end())
-            res += ',' + it->second;
+            res += ',' + to_string(it->second);
         else
             res += ",0.0";
-        res += "\n";
+    
+    res += "\n";
 }
 
 
@@ -163,7 +163,6 @@ SEXP nmmer (SEXP filename, SEXP kk, SEXP mm)
     for (auto h: vp4)
         result += ',' + h;
     result += "\n";
-
 
     for (int i = 0; i < vseqs.size(); ++i){
         map<string,float> mtab = get_mmers (k, m, vseqs[i].second);
