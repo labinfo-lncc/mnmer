@@ -34,7 +34,7 @@ Code here
 ```
 library(devtools)
 
-devtools::install_github("labinfo-lncc/mnmer", ref="main")
+install_github("labinfo-lncc/mnmer", ref="main", auth_token = "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")
 ```
 
 
@@ -42,6 +42,7 @@ devtools::install_github("labinfo-lncc/mnmer", ref="main")
 
 ```
 library("mnmer")
+dir <-system.file("data", package="mnmer")
 ```
 
 Assume we need to distinguish between viruses detected in mosquito samples and viruses that exclusively infect plants. The mn function generates the feature matrix using conditional probability from the datasets mosquito vir.fasta and plant vir.fasta. This function can generate both k-mers and mn-mers.
@@ -51,8 +52,8 @@ Assume we need to distinguish between viruses detected in mosquito samples and v
 The parameter ```k``` is set to choice for k-mer generation, while the parameter ```m``` is set to zero. Considering that the k-mers are conditioned to zero bases.
 
 ```
-./nmmercpp -f mosquito_vir.fasta -k 2 -m 0 ; mv matrix_*.csv mosquito.csv
-./nmmercpp -f plant_vir.fasta -k 2 -m 0 ; mv matrix_*.csv plant.csv
+mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
+plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,0)
 ```
 
 #### Producing (m,n)-mers 
@@ -60,11 +61,11 @@ The parameter ```k``` is set to choice for k-mer generation, while the parameter
 The ```k``` and ```m``` parameters are chosen by the user for mn-mer creation. For instance, ```k = 2``` and ```m = 1``` yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
 
 ```
-./nmmercpp -f mosquito_vir.fasta -k 2 -m 1 ; mv matrix_*.csv mosquito.csv
-./nmmercpp -f plant_vir.fasta -k 2 -m 1 ; mv matrix_*.csv plant.csv
+mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,1)
+plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,1)
 ```
 
-The outputs are written into mosquito.csv and plant.csv files. Bases other than A, C, T, and G were disregarded.
+Bases other than A, C, T, and G were disregarded.
 
 For classification outside of the mnmer program, we utilize the (1,1)-mer feature matrices. Here's a real-world example of code:
 
@@ -73,19 +74,16 @@ For classification outside of the mnmer program, we utilize the (1,1)-mer featur
 library(data.table)
 library(caret)
 
-ctrl <- trainControl(method="repeatedcv", number=10, repeats=3)
-mos <- fread(file="mosquito.csv", header=T, stringsAsFactors = T, sep=",")
-classes <- replicate(nrow(mos), "mosquito.vir")
-r2 <- cbind(mos,classes)
-plant <- fread(file="plant.csv", header=T, stringsAsFactors = T, sep=",")
+classes <- replicate(nrow(mosquito), "mosquito.vir")
+featureMatrix_mosquito <- cbind(mosquito,classes)
 classes <- replicate(nrow(plant), "plant.vir")
-r1 <- cbind(plant,classes)
+featureMatrix_plant <- cbind(plant,classes)
 
-subseq <- rbind(r1,r2)
-subseq <- subset(subseq, select = -c(seqid))
-train_index <- createDataPartition(subseq$classes, p=0.8, list=FALSE)
-train <- subseq[train_index, ]
-test <- subseq[-train_index, ]
+featureMatrix <- rbind(featureMatrix_mosquito, featureMatrix_plant)
+featureMatrix <- subset(featureMatrix, select = -c(seqid))
+train_index <- createDataPartition(featureMatrix$classes, p=0.8, list=FALSE)
+train <- featureMatrix[train_index, ]
+test <- featureMatrix[-train_index, ]
 control <- trainControl(method="cv", summaryFunction=twoClassSummary, classProbs=T, savePredictions = T)
 roc <- train(classes ~ ., data=train, method="rf", preProc=c("center"), trControl=control)
 
@@ -107,7 +105,6 @@ Specificity | 0.9980
 ## Citation
 
 All data used in this project are stored at: (link) (FASTA files), (link) (Feature Matrices), and (link) (Results Metrics). 
-
 
 
 ## Work in progress
