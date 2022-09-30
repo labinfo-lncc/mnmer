@@ -8,11 +8,12 @@ The (m,n)-mer R package was created to summarize biological data into numerical 
 
 ![Fig1](https://user-images.githubusercontent.com/57667417/191081859-0b0ae464-f257-4c82-9dea-8d4629605357.png)
 
+
 **Fig 1.** Comparing k-mer to mn-mer relative frequency.
 
 According to Figure 2, the k-mers are represented as (0,k) and the mn-mers as (m,n).
 
-![Fig2](https://user-images.githubusercontent.com/57667417/192771869-5ac2f387-b4ab-48f5-80d3-fad908d6fe9e.png)
+![Fig2](https://user-images.githubusercontent.com/57667417/193356992-faa03a21-fb0a-48cc-b3fb-975021060b79.png)
 
 **Fig 2.** Numeric representation.
 
@@ -103,7 +104,7 @@ Specificity | 0.9980
 
 ## Citation
 
-All data used in this project are stored at: (link) (FASTA files), (link) (Feature Matrices), and (link) (Results Metrics). 
+All data used in this project are stored at: https://biotools.labinfo.lncc.br/mnmer/ 
 
 
 ## Work in progress
