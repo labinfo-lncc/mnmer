@@ -4,7 +4,7 @@ Version: 0.1.0
 Authors@R: 
   c(person(given = "Amanda",
            family = "Andrade",
-           role = c("aut", "cre"),
+           role = c("aut"),
            email = "aandradebio@gmail.com",
            comment = c(ORCID = "0000-0003-3530-7435")),
    person(given = "Otávio",
@@ -17,8 +17,7 @@ Authors@R:
            role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4632-2086"))
 Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). 
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: Artistic License 2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
