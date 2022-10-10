@@ -5,6 +5,8 @@ Authors@R:  c(person(given = "Amanda",family = "Andrade",email = "aandradebio@gm
    	person(given = "Marco",family = "Grivet", role = "aut"),
    	person(given = "Otávio",family = "Brustolini", role= "aut"),
 	person(given = "Ana",family = "Vasconcelos",role = c("cre", "ths"), email = "atrv@lncc.br",comment = c(ORCID = "0000-0002-4632-2086")))
+Author: Ana Tereza R. Vasconcelos <atrv@lncc.br>
+Maintainer: Ana Tereza R. Vasconcelos <atrv@lncc.br>
 Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). 
 License: Artistic License 2.0 + file LICENSE
 Encoding: UTF-8
