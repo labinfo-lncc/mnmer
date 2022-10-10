@@ -13,7 +13,8 @@ Authors@R:
            family = "Grivet"),
     person(given = "Ana",
            family = "Vasconcelos",
-           email = "atrv@lncc.br"
+           email = "atrv@lncc.br",
+           role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4632-2086"))
 Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). 
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
