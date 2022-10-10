@@ -1,6 +1,6 @@
 Package: mnmer
 Title: (m,n)-mer - A Simple and New Statistical Feature for viral Classification
-Version: 0.01
+Version: 0.1.0
 Authors@R: 
   c(person(given = "Amanda",
            family = "Andrade",
