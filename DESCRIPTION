@@ -8,7 +8,7 @@ Authors@R:  c(person(given = "Amanda",family = "Andrade",email = "aandradebio@gm
 Author: Ana Tereza R. Vasconcelos <atrv@lncc.br>
 Maintainer: Ana Tereza R. Vasconcelos <atrv@lncc.br>
 Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). 
-License: Artistic License 2.0 + file LICENSE
+License: Artistic-2.0 + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
