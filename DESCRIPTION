@@ -7,7 +7,7 @@ Authors@R:  c(person(given = "Amanda",family = "Andrade",email = "aandradebio@gm
 	person(given = "Ana",family = "Vasconcelos",role = c("cre", "ths"), email = "atrv@lncc.br",comment = c(ORCID = "0000-0002-4632-2086")))
 Author: Ana Tereza R. Vasconcelos <atrv@lncc.br>
 Maintainer: Ana Tereza R. Vasconcelos <atrv@lncc.br>
-Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). 
+Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). The (m,n)-mer R package was created to summarize biological data into numerical characteristics. It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. This output is combined with class information to generate the feature matrix for classification.
 License: Artistic-2.0 + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
