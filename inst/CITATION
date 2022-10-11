@@ -3,7 +3,7 @@ citHeader("To cite mnmer in publications use:")
 citEntry(
   entry    = "Article",
   title    = "(m,n)-mer - A Simple and New Statistical Feature for viral Classification",
-  author   = "ANDRADE, AASA","GRIVET, M", "BRUSTOLINI, O. J. B. ", "VASCONCELOS, A. T. R.",
+  author   = "ANDRADE, A. A. S.","GRIVET, M", "BRUSTOLINI, O. J. B. ", "VASCONCELOS, A. T. R.",
   journal  = "in press",
   year     = ,
   volume   = ,
