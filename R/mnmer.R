@@ -1,3 +1,21 @@
+#' The mn function generates the feature matrix using conditional probability.
+#' 
+#' This function can generate both k-mers and (m,n)-mers. It calls the cmnmer script. 
+#'
+#' @param inputParameter1 Compressed FASTA file .xz \code{inputParameter1}
+#' @param inputParameter2 Value of k for k-mer generation. Needs to be different from zero. \code{inputParameter2}
+#' @param inputParameter3 Value of m for (m,n)-mer generation in the format of (m, k-m). In case of k-mer generation, m should be zero as (0,k). \code{inputParameter3}
+#'
+#' @return Outpus the conditional probability distribution. Each sequence in a row.
+#'
+#' @keywords (m,n)-mer k-mers featureMatrix
+#'
+#' @export
+#' 
+#' @examples
+#' features <- mnmer(sequences.fasta.xz,2,0)
+#' features <- mnmer(sequences.fasta.xz,2,1)
+#' 
 mnmer <- function (file, k, m) {
   if (!file.exists(file)) {
     stop("The file does not exists")}
