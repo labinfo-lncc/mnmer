@@ -34,7 +34,7 @@ R version 4.0.0 or later
 ```
 library(devtools)
 
-install_github("labinfo-lncc/mnmer", ref="main", auth_token = "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")
+install_github("labinfo-lncc/mnmer", ref="main")
 ```
 
 
@@ -42,7 +42,7 @@ install_github("labinfo-lncc/mnmer", ref="main", auth_token = "ghp_GuN3cL8rUIzW1
 
 ```
 library("mnmer")
-dir <-system.file("data", package="mnmer")
+dir <-system.file("extdata", package="mnmer")
 ```
 
 Assume we need to distinguish between viruses detected in mosquito samples and viruses that exclusively infect plants. The mn function generates the feature matrix using conditional probability from the datasets mosquito vir.fasta and plant vir.fasta. This function can generate both k-mers and mn-mers.
