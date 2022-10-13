@@ -6,7 +6,7 @@
 #' @param inputParameter2 Value of k for k-mer generation. Needs to be different from zero. \code{inputParameter2}
 #' @param inputParameter3 Value of m for (m,n)-mer generation in the format of (m, k-m). In case of k-mer generation, m should be zero as (0,k). \code{inputParameter3}
 #'
-#' @return output A description of the object the function outputs 
+#' @return Outputs a dataframe containg the distribution of condicitonal probability per sequence
 #'
 #' @keywords (m,n)-mer k-mers featureMatrix
 #'
