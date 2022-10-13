@@ -99,10 +99,10 @@ This classification produces the ROC curve and metrics shown below:
 
 Metrics | Value
 --- | ---
-AUC | 1.00000
-ROC | 0.99969
-Sensibility | 0.97000
-Specificity | 0.9980
+AUC | 1.0000
+ROC | 1.0000
+Sensibility | 0.9500
+Specificity | 1.0000
 
 ## Citation
 
