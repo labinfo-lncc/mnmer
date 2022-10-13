@@ -73,6 +73,7 @@ For classification outside of the mnmer program, we utilize the (1,1)-mer featur
 
 library(data.table)
 library(caret)
+library(MLeval)
 
 classes <- replicate(nrow(mosquito), "mosquito.vir")
 featureMatrix_mosquito <- cbind(mosquito,classes)
@@ -86,6 +87,7 @@ train <- featureMatrix[train_index, ]
 test <- featureMatrix[-train_index, ]
 control <- trainControl(method="cv", summaryFunction=twoClassSummary, classProbs=T, savePredictions = T)
 roc <- train(classes ~ ., data=train, method="rf", preProc=c("center"), trControl=control)
+res <- evalm(roc) # Make the ROC plot
 
 ```
 
