@@ -17,4 +17,4 @@ LinkingTo:
 SystemRequirements: C++11
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown
-Depends: R(>= 3.0.2), readr
+Depends: R(>= 3.0.2)
