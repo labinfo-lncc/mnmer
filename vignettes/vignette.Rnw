@@ -1,6 +1,25 @@
-%\VignetteIndexEntry{Vignette Title}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
+---
+title: "(m,n)-mer - A Simple and New Statistical Feature for viral Classification"
+author:
+- name: Amanda Araújo Serrão de Andrade
+  affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
+- name: Marco Grivet
+  affiliation: Pontifícia Universidade Católica do Rio de Janeiro, 22451-900, Brazil
+  - name: Otávio Brustolini
+  affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
+  - name: Ana Tereza Ribeiro de Vasconcelos
+  affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
+  email: atrv@lncc.br
+package: mnmer
+output:
+  BiocStyle::html_document
+abstract: |
+  The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we present the mnmer function and show a pratical example of classification using mnmer output.
+vignette: |
+  %\VignetteIndexEntry{(m,n)-mer - A Simple and New Statistical Feature for viral Classification}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
 \documentclass{article}
 <<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
@@ -119,10 +138,6 @@ install_github("labinfo-lncc/mnmer", ref="main")
 The `mnmer` function is the main function of this package. It generates the dataframes containing the conditional probability.
 This function can generate both k-mers and (m,n)-mers, by calling the function `cmmer` from the C++ script.
 
-<<eval=FALSE>>=
-dataframe <- mnmer(file, k, m)
-@
-
 The parameters receives:
 
 file = FASTA file (it could be an multiFASTA)
@@ -136,7 +151,7 @@ m = Value of m for (m,n)-mer generation in the format of (m, k-m). In case of k-
 
 Assume we need to distinguish between viruses detected in mosquito samples and viruses that exclusively infect plants. After instalation, the user should run: 
 
-<<eval=FALSE>>=
+<<eval=TRUE>>=
 library("mnmer")
 dir <-system.file("extdata", package="mnmer")
 @
@@ -145,7 +160,7 @@ dir <-system.file("extdata", package="mnmer")
 
 The parameter k is set to choice for k-mer generation, while the parameter m is set to zero. Considering that the k-mers are conditioned to zero bases.
 
-<<eval=FALSE>>=
+<<eval=TRUE>>=
 mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
 plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,0)
 @
@@ -154,7 +169,7 @@ plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,0)
 
 The k and m parameters are chosen by the user for mn-mer creation. For instance, k = 2 and m = 1 yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
 
-<<eval=FALSE>>=
+<<eval=TRUE>>=
 mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,1)
 plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,1)
 @
@@ -163,7 +178,7 @@ Bases other than A, C, T, and G were disregarded.
 
 For classification outside of the mnmer program, we utilize the (1,1)-mer feature matrices. Here's a real-world example of code using \CRANpkg{Caret}, \CRANpkg{MLeval} and \CRANpkg{data.table}:
 
-<<eval=FALSE>>=
+<<eval=TRUE>>=
 library(data.table)
 library(caret)
 library(MLeval)
@@ -180,8 +195,8 @@ train <- featureMatrix[train_index, ]
 test <- featureMatrix[-train_index, ]
 control <- trainControl(method="cv", 
                         summaryFunction=twoClassSummary, 
-                        classProbs=T, 
-                        savePredictions = T)
+                        classProbs=TRUE, 
+                        savePredictions = TRUE)
 roc <- train(classes ~ ., 
             data=train, 
             method="rf", 

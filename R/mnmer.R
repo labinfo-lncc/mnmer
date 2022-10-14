@@ -28,7 +28,7 @@ mnmer <- function (file, k, m) {
   }
   
     ctab <- .Call("cmnmer", file, k, m)
-    tab <- read.csv(text = ctab, header = T)
+    tab <- read.csv(text = ctab, header = TRUE)
     return(tab)
 }
 

@@ -1,14 +1,12 @@
 Package: mnmer
 Title: (m,n)-mer - A Simple and New Statistical Feature for viral Classification
-Version: 0.1.0
-Authors@R:  c(person(given = "Amanda",family = "Andrade",email = "aandradebio@gmail.com",role = "aut", comment = c(ORCID = "0000-0003-3530-7435")),
+Version: 0.99.0
+Authors@R:  c(person(given = "Ana",family = "Vasconcelos", role = "aut", comment = c(ORCID = "0000-0002-4632-2086")),
    	person(given = "Marco",family = "Grivet", role = "aut"),
-   	person(given = "Otávio",family = "Brustolini", role= "aut"),
-	person(given = "Ana",family = "Vasconcelos",role = c("cre", "ths"), email = "atrv@lncc.br",comment = c(ORCID = "0000-0002-4632-2086")))
-Author: Ana Tereza R. Vasconcelos <atrv@lncc.br>
-Maintainer: Ana Tereza R. Vasconcelos <atrv@lncc.br>
+   	person(given = "Otavio",family = "Brustolini", role= "aut"),
+	person(given = "Amanda",family = "Andrade",role = c("cre", "ths"), email = "aandradebio@gmail.com", comment = c(ORCID = "0000-0003-3530-7435")))
 Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. This output is combined with class information to generate the feature matrix for classification.
-License: Artistic-2.0 + file LICENSE
+License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
@@ -16,5 +14,6 @@ LinkingTo:
     cpp11
 SystemRequirements: C++11
 VignetteBuilder: knitr
-Suggests: BiocStyle, knitr, rmarkdown
-Depends: R(>= 4.0.0)
+Suggests: BiocStyle, knitr, rmarkdown, RUnit, BiocGenerics
+Depends: R(>= 4.2.0), utils
+biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI  
