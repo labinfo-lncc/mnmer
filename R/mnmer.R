@@ -1,12 +1,12 @@
-#' The mn function generates the feature matrix using conditional probability.
+#' mnmer
 #' 
-#' This function can generate both k-mers and (m,n)-mers. It calls the cmnmer script. 
+#' @description Generates the feature matrix using conditional probability. 
 #'
 #' @param inputParameter1 FASTA file \code{inputParameter1}
-#' @param inputParameter2 Value of k for k-mer generation. Needs to be different from zero. \code{inputParameter2}
-#' @param inputParameter3 Value of m for (m,n)-mer generation in the format of (m, k-m). In case of k-mer generation, m should be zero as (0,k). \code{inputParameter3}
+#' @param inputParameter2 Int value of k \code{inputParameter2}
+#' @param inputParameter3 Int value of m \code{inputParameter3}
 #'
-#' @return Outputs a dataframe containg the distribution of condicitonal probability per sequence
+#' @return Outputs a dataframe 
 #'
 #' @keywords (m,n)-mer k-mers featureMatrix
 #'
@@ -17,16 +17,12 @@
 #' features <- mnmer(sequences.fasta,2,1)
 #' 
 mnmer <- function (file, k, m) {
-  if (!file.exists(file)) {
-    stop("The file does not exists")}
-  
-  k <- as.integer(k)
-  m <- as.integer(m)
-  
-  if (typeof(k) !="integer" || typeof(m)!="integer" || k =="0" || m > k){
-    stop("Fix the parameters")
-  }
-  
+    if (!file.exists(file)) {
+        stop("The file does not exists")}
+    k <- as.integer(k)
+    m <- as.integer(m)
+    if (typeof(k) !="integer" || typeof(m)!="integer" || k =="0" || m > k){
+        stop("Fix the parameters")}
     ctab <- .Call("cmnmer", file, k, m)
     tab <- read.csv(text = ctab, header = TRUE)
     return(tab)

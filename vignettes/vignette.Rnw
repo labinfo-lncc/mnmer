@@ -1,24 +1,24 @@
 ---
-title: "(m,n)-mer - A Simple and New Statistical Feature for viral Classification"
+title: "(m,n)-mer"
 author:
-- name: Amanda Araújo Serrão de Andrade
-  affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
-- name: Marco Grivet
-  affiliation: Pontifícia Universidade Católica do Rio de Janeiro, 22451-900, Brazil
-  - name: Otávio Brustolini
-  affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
-  - name: Ana Tereza Ribeiro de Vasconcelos
-  affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
-  email: atrv@lncc.br
+    - name: Amanda Araújo Serrão de Andrade
+    affiliation: National Laboratory for Scientific Computing, Brazil
+    - name: Marco Grivet
+    affiliation: Pontifícia Universidade Católica do Rio de Janeiro, Brazil
+    - name: Otávio Brustolini
+    affiliation: National Laboratory for Scientific Computing, Brazil
+    - name: Ana Tereza Ribeiro de Vasconcelos
+    affiliation: National Laboratory for Scientific Computing, Brazil
+    email: atrv@lncc.br
 package: mnmer
 output:
-  BiocStyle::html_document
+    BiocStyle::html_document
 abstract: |
-  The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we present the mnmer function and show a pratical example of classification using mnmer output.
+    The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we present the mnmer function and show a pratical example of classification using mnmer output.
 vignette: |
-  %\VignetteIndexEntry{(m,n)-mer - A Simple and New Statistical Feature for viral Classification}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{(m,n)-mer - A Simple and New Statistical Feature for viral Classification}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 \documentclass{article}
@@ -167,7 +167,9 @@ plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,0)
 
 \subsubsection{Produce (m,n)-mer distributions}
 
-The k and m parameters are chosen by the user for mn-mer creation. For instance, k = 2 and m = 1 yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
+The k and m parameters are chosen by the user for mn-mer creation.
+
+For instance, k = 2 and m = 1 yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
 
 <<eval=TRUE>>=
 mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,1)
@@ -176,7 +178,9 @@ plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,1)
 
 Bases other than A, C, T, and G were disregarded.
 
-For classification outside of the mnmer program, we utilize the (1,1)-mer feature matrices. Here's a real-world example of code using \CRANpkg{Caret}, \CRANpkg{MLeval} and \CRANpkg{data.table}:
+For classification outside of mnmer, we utilize the (1,1)-mer feature matrices. 
+
+Here's a real-world example of code using \CRANpkg{Caret}, \CRANpkg{MLeval} and \CRANpkg{data.table}:
 
 <<eval=TRUE>>=
 library(data.table)
@@ -215,8 +219,15 @@ This classification produces the ROC curve below:
 
 \subsection{What to expect from newest versions}
 
-We would like to add new functionalities related to handle big multiFASTA files, paralelism and compressed files. 
-We are also implementing the option to generate the (m,n)-mer distributions for IUPAC and N bases as well.
+We would like to add new functionalities related to:
+
+Handle big multiFASTA files;
+
+Paralelism;
+
+Input compressed files; and
+
+(m,n)-mer distribution for IUPACS and N bases; 
 
 \subsection{SessionInfo}
 

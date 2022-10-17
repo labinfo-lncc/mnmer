@@ -2,23 +2,22 @@
 % Please edit documentation in R/mnmer.R
 \name{mnmer}
 \alias{mnmer}
-\title{mnmer function}
+\title{mnmer}
 \usage{
 mnmer(file, k, m)
 }
 \arguments{
 \item{inputParameter1}{FASTA file \code{inputParameter1}}
 
-\item{inputParameter2}{Int value of k for k-mer generation. Needs to be different from zero. \code{inputParameter2}}
+\item{inputParameter2}{Int value of k \code{inputParameter2}}
 
-\item{inputParameter3}{Int value of m for (m,n)-mer generation in the format of (m, k-m). \code{inputParameter3}}
+\item{inputParameter3}{Int value of m \code{inputParameter3}}
 }
 \value{
-Outputs a dataframe containg the distribution of condicitonal probability per sequence
+Outputs a dataframe
 }
 \description{
-The mn function generates the feature matrix using conditional probability.
-This function can generate both k-mers and (m,n)-mers. It calls the cmnmer script.
+Generates the feature matrix using conditional probability.
 }
 \examples{
 features <- mnmer(sequences.fasta,2,0)

@@ -1,7 +1,7 @@
 Package: mnmer
 Title: (m,n)-mer - A Simple and New Statistical Feature for viral Classification
 Version: 0.99.0
-Authors@R:  c(person(given = "Ana",family = "Vasconcelos", role = "aut", comment = c(ORCID = "0000-0002-4632-2086")),
+Authors@R: c(person(given = "Ana",family = "Vasconcelos", role = "aut", comment = c(ORCID = "0000-0002-4632-2086")),
    	person(given = "Marco",family = "Grivet", role = "aut"),
    	person(given = "Otavio",family = "Brustolini", role= "aut"),
 	person(given = "Amanda",family = "Andrade",role = c("cre", "ths"), email = "aandradebio@gmail.com", comment = c(ORCID = "0000-0003-3530-7435")))
@@ -9,11 +9,16 @@ Description: The (m,n)-mer is a new statistical feature based upon conditional f
 License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 LinkingTo: 
     cpp11
 SystemRequirements: C++11
 VignetteBuilder: knitr
-Suggests: BiocStyle, knitr, rmarkdown, RUnit, BiocGenerics
+Suggests: 
+    BiocStyle,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
 Depends: R(>= 4.2.0), utils
 biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI  
+Config/testthat/edition: 3
