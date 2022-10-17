@@ -5,8 +5,7 @@ Authors@R: c(person(given = "Amanda",family = "Andrade", role = c("cre", "aut"),
    	person(given = "Marco",family = "Grivet", role = "aut"),
    	person(given = "Otavio",family = "Brustolini", role= "aut"),
 	person(given = "Ana",family = "Vasconcelos",role = c("aut", "ths")))
-Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. This output is combined with class information to generate the feature matrix for classification.
-The mn function generates the feature matrix using conditional probability from the datasets. This function can generate both k-mers and mn-mers.
+Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. This output is combined with class information to generate the feature matrix for classification. The mn function generates the feature matrix using conditional probability from the datasets. This function can generate both k-mers and mn-mers.
 License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
