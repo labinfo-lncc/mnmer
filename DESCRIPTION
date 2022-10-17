@@ -1,10 +1,10 @@
 Package: mnmer
 Title: (m,n)-mer - A Simple and New Statistical Feature for viral Classification
 Version: 0.99.0
-Authors@R: c(person(given = "Ana",family = "Vasconcelos", role = "aut", comment = c(ORCID = "0000-0002-4632-2086")),
+Authors@R: c(person(given = "Amanda",family = "Andrade", role = c("cre", "aut"), email = "aandradebio@gmail.com"),
    	person(given = "Marco",family = "Grivet", role = "aut"),
    	person(given = "Otavio",family = "Brustolini", role= "aut"),
-	person(given = "Amanda",family = "Andrade",role = c("cre", "ths"), email = "aandradebio@gmail.com", comment = c(ORCID = "0000-0003-3530-7435")))
+	person(given = "Ana",family = "Vasconcelos",role = c("aut", "ths")))
 Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. This output is combined with class information to generate the feature matrix for classification.
 License: Artistic-2.0
 Encoding: UTF-8
