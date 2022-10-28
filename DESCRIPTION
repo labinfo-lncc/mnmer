@@ -16,6 +16,7 @@ SystemRequirements: C++11
 VignetteBuilder: knitr
 Suggests: 
     BiocStyle,
+    covr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
