@@ -1,25 +1,6 @@
----
-title: "(m,n)-mer"
-author:
-    - name: Amanda Araújo Serrão de Andrade
-    affiliation: National Laboratory for Scientific Computing, Brazil
-    - name: Marco Grivet
-    affiliation: Pontifícia Universidade Católica do Rio de Janeiro, Brazil
-    - name: Otávio Brustolini
-    affiliation: National Laboratory for Scientific Computing, Brazil
-    - name: Ana Tereza Ribeiro de Vasconcelos
-    affiliation: National Laboratory for Scientific Computing, Brazil
-    email: atrv@lncc.br
-package: mnmer
-output:
-    BiocStyle::html_document
-abstract: |
-    The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we present the mnmer function and show a pratical example of classification using mnmer output.
-vignette: |
+    %\VignetteEngine{knitr::knitr}
     %\VignetteIndexEntry{(m,n)-mer - A Simple and New Statistical Feature for viral Classification}
-    %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
----
 
 \documentclass{article}
 <<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
@@ -183,10 +164,7 @@ For classification outside of mnmer, we utilize the (1,1)-mer feature matrices.
 Here's a real-world example of code using \CRANpkg{Caret}, \CRANpkg{MLeval} and \CRANpkg{data.table}:
 
 <<eval=TRUE>>=
-library(data.table)
 library(caret)
-library(MLeval)
-
 classes <- replicate(nrow(mosquito), "mosquito.vir")
 featureMatrix_mosquito <- cbind(mosquito,classes)
 classes <- replicate(nrow(plant), "plant.vir")
@@ -194,28 +172,20 @@ featureMatrix_plant <- cbind(plant,classes)
 
 featureMatrix <- rbind(featureMatrix_mosquito, featureMatrix_plant)
 featureMatrix <- subset(featureMatrix, select = -c(seqid))
-train_index <- createDataPartition(featureMatrix$classes, p=0.8, list=FALSE)
+train_index <- caret::createDataPartition(featureMatrix$classes, p=0.8, list=FALSE)
 train <- featureMatrix[train_index, ]
 test <- featureMatrix[-train_index, ]
-control <- trainControl(method="cv", 
+control <- caret::trainControl(method="cv", 
                         summaryFunction=twoClassSummary, 
                         classProbs=TRUE, 
                         savePredictions = TRUE)
-roc <- train(classes ~ ., 
+roc <- caret::train(classes ~ ., 
             data=train, 
             method="rf", 
             preProc=c("center"), 
             trControl=control)
-res <- evalm(roc) # Make the ROC plot
+res <- MLeval::evalm(roc) # Make the ROC plot
 @
-
-This classification produces the ROC curve below:
-
-\begin{figure*}
-\includegraphics[keepaspectratio,width=12cm]{\jobname-Fig6.png}
-\raggedright
-\caption{\label{fig:wide}ROC curve and Area Under the Curve Value}
-\end{figure*}
 
 \subsection{What to expect from newest versions}
 

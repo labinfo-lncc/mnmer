@@ -1,5 +1,5 @@
 #' mnmer
-#' 
+#' @aliases cmnmer mnmer MNmer
 #' @description Generates the feature matrix using conditional probability. 
 #'
 #' @param inputParameter1 FASTA file \code{inputParameter1}
@@ -13,17 +13,17 @@
 #' @export
 #' 
 #' @examples
-#' features <- mnmer(sequences.fasta,2,0)
-#' features <- mnmer(sequences.fasta,2,1)
+#' dir <-system.file("extdata", package="mnmer")
+#' mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
 #' 
-mnmer <- function (file, k, m) {
-    if (!file.exists(file)) {
+mnmer <- function (inputParameter1, inputParameter2, inputParameter3) {
+    if (!file.exists(inputParameter1)) {
         stop("The file does not exists")}
-    k <- as.integer(k)
-    m <- as.integer(m)
-    if (typeof(k) !="integer" || typeof(m)!="integer" || k =="0" || m > k){
+    inputParameter2 <- as.integer(inputParameter2)
+    inputParameter3 <- as.integer(inputParameter3)
+    if (typeof(inputParameter2) !="integer" || typeof(inputParameter3)!="integer" || inputParameter2 =="0" || inputParameter3 > inputParameter2){
         stop("Fix the parameters")}
-    ctab <- .Call("cmnmer", file, k, m)
+    ctab <- .Call("cmnmer", inputParameter1, inputParameter2, inputParameter3)
     tab <- read.csv(text = ctab, header = TRUE)
     return(tab)
 }

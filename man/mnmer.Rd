@@ -2,9 +2,11 @@
 % Please edit documentation in R/mnmer.R
 \name{mnmer}
 \alias{mnmer}
+\alias{cmnmer}
+\alias{MNmer}
 \title{mnmer}
 \usage{
-mnmer(file, k, m)
+mnmer(inputParameter1, inputParameter2, inputParameter3)
 }
 \arguments{
 \item{inputParameter1}{FASTA file \code{inputParameter1}}
@@ -20,8 +22,8 @@ Outputs a dataframe
 Generates the feature matrix using conditional probability.
 }
 \examples{
-features <- mnmer(sequences.fasta,2,0)
-features <- mnmer(sequences.fasta,2,1)
+dir <-system.file("extdata", package="mnmer")
+mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
 
 }
 \keyword{(m,n)-mer}

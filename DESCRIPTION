@@ -19,7 +19,9 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    caret,
+    MLeval
 Depends: R(>= 4.2.0), utils
 biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI  
 Config/testthat/edition: 3

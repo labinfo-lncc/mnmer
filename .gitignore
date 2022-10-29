@@ -28,3 +28,5 @@ unsrturl.bst
 .seed
 .settings 
 .tm_properties
+.Rproj.user
+inst/doc
