@@ -1,4 +1,0 @@
-exportPattern("^[[:alpha:]]+")
-useDynLib(mnmer, .registration = TRUE)
-export(cmnmer)
-importFrom("utils", "read.csv")
