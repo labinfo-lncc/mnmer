@@ -18,7 +18,7 @@ abstract: |
 vignette: |
   %\VignetteIndexEntry{(m,n)-mer - A Simple and New Statistical Feature for viral Classification}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\usepackage[UTF-8]{inputenc}
 ---
 
 \section{Introduction to the (m,n)-mer concept}
