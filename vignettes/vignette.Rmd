@@ -186,8 +186,6 @@ res <- MLeval::evalm(roc) # Make the ROC plot
 
 \section{What to expect from newest versions}
 
-We would like to add new functionalities related to:
-
 Handle big multiFASTA files;
 
 Paralelism;
