@@ -12,7 +12,7 @@ author:
   email: atrv@lncc.br
 package: mnmer
 output:
-  BiocStyle::pdf_document
+  BiocStyle::html_document
 abstract: |
   The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we present the mnmer function and show a pratical example of classification using mnmer output.
 vignette: |
