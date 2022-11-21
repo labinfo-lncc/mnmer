@@ -2,9 +2,9 @@
 #' @aliases cmnmer mnmer MNmer
 #' @description Generates the feature matrix using conditional probability. 
 #'
-#' @param inputParameter1 FASTA file \code{inputParameter1}
-#' @param inputParameter2 Int value of k \code{inputParameter2}
-#' @param inputParameter3 Int value of m \code{inputParameter3}
+#' @param FASTAfile FASTA file \code{FASTAfile}
+#' @param k Int value of k \code{k}
+#' @param m Int value of m \code{m}
 #'
 #' @return Outputs a dataframe 
 #'
@@ -16,15 +16,39 @@
 #' dir <-system.file("extdata", package="mnmer")
 #' mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
 #' 
-mnmer <- function (inputParameter1, inputParameter2, inputParameter3) {
-    if (!file.exists(inputParameter1)) {
-        stop("The file does not exists")}
-    inputParameter2 <- as.integer(inputParameter2)
-    inputParameter3 <- as.integer(inputParameter3)
-    if (typeof(inputParameter2) !="integer" || typeof(inputParameter3)!="integer" || inputParameter2 =="0" || inputParameter3 > inputParameter2){
-        stop("Fix the parameters")}
-    ctab <- .Call("cmnmer", inputParameter1, inputParameter2, inputParameter3)
-    tab <- read.csv(text = ctab, header = TRUE)
+mnmer <- function (FASTAfile, k, m, pni=0.1) {
+    if (!file.exists(FASTAfile)) {
+        stop("The file does not exists")
+    }
+    k <- as.integer(k)
+    m <- as.integer(m)
+    if (typeof(k) !="integer" || typeof(m)!="integer" || k =="0" || m > k){
+        stop("Fix the parameters")
+    }
+
+    if (k < m)
+        stop ("k must be greater or equal to m")
+
+    seqs <- readDNAStringSet (FASTAfile)
+    seqid <- c()
+    tab <- data.frame()
+
+    for (i in 1:length(seqs)){
+        ni <-  alphabetFrequency (seqs[i], baseOnly=TRUE, as.prob=TRUE)
+        if (ni[5] < pni){ 
+            seqid <- c(seqid,names(seqs)[i])
+            sqs <- as.character(seqs[[i]])
+            ctab <- .Call("cmnmer", sqs, k, m)
+            ts <- read.csv(text = ctab, header = TRUE)
+            tab <- rbind (tab,ts)
+        }
+        else {
+           print ( paste0 ("Warning: ", names(seqs)[i], " has a proportion of N + IUPAC bases = ", ni[5]) )
+        }
+    }
+
+    tab <- cbind (seqid,tab)
+
     return(tab)
 }
 
