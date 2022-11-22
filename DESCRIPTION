@@ -22,6 +22,6 @@ Suggests:
     testthat (>= 3.0.0),
     caret,
     MLeval
-Depends: R(>= 4.2.0), utils
+Depends: R(>= 4.2.0), utils, Biostrings
 biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI  
 Config/testthat/edition: 3
