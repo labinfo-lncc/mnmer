@@ -6,20 +6,20 @@
 \alias{MNmer}
 \title{mnmer}
 \usage{
-mnmer(inputParameter1, inputParameter2, inputParameter3)
+mnmer(FASTAfile, k, m, pni = 0.1)
 }
 \arguments{
-\item{inputParameter1}{FASTA file \code{inputParameter1}}
+\item{FASTAfile}{FASTA file \code{FASTAfile}}
 
-\item{inputParameter2}{Int value of k \code{inputParameter2}}
+\item{k}{Int value of k \code{k}}
 
-\item{inputParameter3}{Int value of m \code{inputParameter3}}
+\item{m}{Int value of m \code{m}}
 }
 \value{
 Outputs a dataframe
 }
 \description{
-Generates the feature matrix using conditional probability.
+Generates the feature matrix using conditional probability. As default, all sequences with N+IUPAC content higher 10\% than are removed.
 }
 \examples{
 dir <-system.file("extdata", package="mnmer")

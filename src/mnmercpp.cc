@@ -1,4 +1,4 @@
-#include <fstream>
+#include <string>
 #include <map>
 #include <set>
 #include <vector>
@@ -56,31 +56,6 @@ inline map<string,float> get_mmers (int k, int m, const string &s)
     return mdat;
 }
 
-//Read fasta file and save the data in the map structure
-vector<pair<string,string>> get_seqs (string file)
-{
-    ifstream f (file);
-    string id, s, seq="";
-    vector<pair<string,string>> vps;
-
-    while (getline (f,s))
-        if (s[0] == '>'){
-            if (seq!="")
-                vps.push_back ({id,seq});
-            id = s.substr (1,s.size());
-            seq="";
-        }
-        else
-            seq += s;
-
-    vps.push_back ({id,seq});
-
-    f.close();
-
-    return vps;
-}
-
-
 //Generates base 4 number  
 string conv4 (int num)
 {
@@ -125,50 +100,41 @@ vector<string> lexnucl (int num, int k)
 }
 
 
-void save_string (string &res, string rname, vector<string> &vp, map<string,float> &mpta)
+void save_string (string &res, vector<string> &vp, map<string,float> &mpta)
 {
     map<string,float>::iterator it;
-
-    res += rname;
     
     for (auto p: vp)
         if ((it=mpta.find (p)) != mpta.end())
-            res += ',' + to_string(it->second);
+            res += to_string(it->second) + ",";
         else
             res += ",0.0";
     
-    res += "\n";
+    res.back() = '\n';
 }
-
-
 
 extern "C" {
 
-SEXP cmnmer (SEXP filename, SEXP kk, SEXP mm)
+SEXP cmnmer (SEXP seq, SEXP kk, SEXP mm)
 {
-    string infile = CHAR(STRING_ELT(filename,0));
+    string sequence = CHAR(STRING_ELT(seq,0));
 
-    int k = asInteger (kk); 
+    int k = asInteger (kk);
     int m = asInteger (mm);
 
 //Get the lexicography of the 4 nucloetide
     vector<string> vp4 = lexnucl(pow(4,k), k);
 
-//Get the sequences
-    vector<pair<string,string>> vseqs = get_seqs (infile);
-
 //Result
-    string result = "seqid";
+    string result = "";
 //Header
     for (auto h: vp4)
-        result += ',' + h;
-    result += "\n";
+        result += h + ",";
+    result.back() = '\n';
+    
+    map<string,float> mtab = get_mmers (k, m, sequence);
 
-    for (int i = 0; i < vseqs.size(); ++i){
-        map<string,float> mtab = get_mmers (k, m, vseqs[i].second);
-
-        save_string (result, vseqs[i].first, vp4, mtab);
-    }
+    save_string (result, vp4, mtab);
 
     SEXP Stab = allocVector(STRSXP, result.size());
 

@@ -9,10 +9,10 @@ author:
   affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
 - name: Ana Tereza Ribeiro de Vasconcelos
   affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
-  email: atrv@lncc.br
+email: atrv@lncc.br
 package: mnmer
 output:
-  BiocStyle::html_document
+  BiocStyle::pdf_document
 abstract: |
   The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we present the mnmer function and show a pratical example of classification using mnmer output.
 vignette: |
@@ -20,7 +20,7 @@ vignette: |
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[UTF-8]{inputenc}
 ---
-
+  
 \section{Introduction to the (m,n)-mer concept}
 
 The (m,n)-mer R package was created to summarize biological data into numerical characteristics, as an alternative for k-mers. It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. The feature matrix for classification is created by combining its output with class information.
@@ -29,8 +29,8 @@ Since letters are a bit awkward from a mathematical viewpoint, lets univocally a
 
 If we order all the k-mers according to these numbers, we say the k-mers are “lexicographically” ordered and we can use the notation $s_{k}^{i}$ to identify the k-mer associated to the decimal number $i$ ranging from $0$ to $4.k-1$. Following the above example, we can say that  $s^{376}_{6}=ACCTGA$.
 Let’s now consider a particular genome extracted from a particular organism and assume that we count the occurrence of all distinct k-mers present in this genome. We will denote by $c_{k}^{i}$ the count corresponding to the i-th k-mer. Then we can create a real vector of size $4.k$ as illustrated in the Figure 1 below: 
-
-\begin{figure*}
+  
+  \begin{figure*}
 \includegraphics[keepaspectratio,width=12cm]{\jobname-Fig1.png}
 \raggedright
 \caption{\label{fig:wide}k-mer organization for k-mer and (m,n)-mer statistical distributions evaluation.}
@@ -84,13 +84,6 @@ For more details and performance comparison, please see Andrade et al., 2022 (in
 
 The \Githubpkg{labinfo-lncc/mnmer} R package was created to summarize biological data into numerical characteristics. It accepts a FASTA file and generates a dataframe that describes the frequency of all (m,n)-mers identified in the input sequences. This output is coupled with class information to create a feature matrix. 
 
-Limitations:
-
-The software currently only handles simple FASTA files (no compression required);
-In the (m,n)-mer generation, all bases other than A, C, T, and G are disregarded.
-There is no parallelism or special C++ handling for large FASTA.
-Prior to categorization, the user must add the data classes.
-
 \subsection{Dependencies}
 
 The package only needs \R{} 4.0.0 or later.
@@ -110,13 +103,20 @@ The main function of this package is the `mnmer` function. It creates dataframes
 By invoking the function  `cmmer` from the C++ script, this function can create both k-mers and (m,n)-mers.
 
 The parameters receives:
-
-`file` = FASTA file (it could be an multiFASTA)
+  
+`file` = file = FASTA file. It could be a multiFASTA. This file can be .gz compressed or not. 
 
 `k` = Value of k for k-mer generation. Needs to be different from zero. 
 
 `m` = Value of m for (m,n)-mer generation in the format of (m, k-m). In case of k-mer generation, m should be zero as (0,k).
 
+As default, all sequences with high content of N + IUPAC bases will be removed from further analysis given the little informative nature of those bases. In that case, the mnmer function prints the following warning:
+  
+```{r, echo=FALSE}
+score <- 10
+paste0("Warning: Sequence has a proportion of N + IUPAC bases = ", score, "%")
+```
+  
 \subsection{Pratical example}
 
 The mnmer function generates a independent feature matrix that may be used to conduct clustering or classification. 
@@ -124,7 +124,7 @@ The mnmer function generates a independent feature matrix that may be used to co
 Assume we need to distinguish between viruses that only replicate in mosquito and viruses that only replicate in plants. The corresponding FASTA files can be found in the extdata folder.
 
 After package installation, the user should run: 
-
+  
 ```{r, eval=TRUE}
 library("mnmer")
 dir <-system.file("extdata", package="mnmer")
@@ -135,8 +135,8 @@ dir <-system.file("extdata", package="mnmer")
 For k-mer generation, the parameter k is set to choice, while the parameter m is set to zero. Given that the k-mers have been conditioned to zero bases.
 
 ```{r, eval=TRUE}
-mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
-plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,0)
+mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
+plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,0)
 ```
 
 \subsubsection{Produce (m,n)-mer distributions}
@@ -157,8 +157,8 @@ Caret (https://topepo.github.io/caret/) is a library of functions for building p
 MLeval (https://cran.r-project.org/web/packages/MLeval/index.html) is used to plot performance metrics. 
 
 To execute the example, enter the following code:
-
-```{r, eval=TRUE}
+  
+  ```{r, eval=TRUE}
 library(caret)
 # Add class information 
 classes <- replicate(nrow(mosquito), "mosquito.vir")
@@ -173,26 +173,16 @@ train_index <- caret::createDataPartition(featureMatrix$classes, p=0.8, list=FAL
 train <- featureMatrix[train_index, ]
 test <- featureMatrix[-train_index, ]
 control <- caret::trainControl(method="cv", 
-                        summaryFunction=twoClassSummary, 
-                        classProbs=TRUE, 
-                        savePredictions = TRUE)
+                               summaryFunction=twoClassSummary, 
+                               classProbs=TRUE, 
+                               savePredictions = TRUE)
 roc <- caret::train(classes ~ ., 
-            data=train, 
-            method="rf", 
-            preProc=c("center"), 
-            trControl=control)
+                    data=train, 
+                    method="rf", 
+                    preProc=c("center"), 
+                    trControl=control)
 res <- MLeval::evalm(roc) # Make the ROC plot
 ```
-
-\section{What to expect from newest versions}
-
-Handle big multiFASTA files;
-
-Paralelism;
-
-Input compressed files; and
-
-(m,n)-mer distribution for IUPACS and N bases; 
 
 \section{SessionInfo}
 
