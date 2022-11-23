@@ -21,7 +21,8 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     caret,
-    MLeval
+    MLeval,
+    pdfcrop
 Depends: R(>= 4.2.0), utils, Biostrings
 biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI  
 Config/testthat/edition: 3
