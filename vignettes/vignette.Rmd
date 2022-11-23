@@ -30,7 +30,7 @@ Since letters are a bit awkward from a mathematical viewpoint, lets univocally a
 If we order all the k-mers according to these numbers, we say the k-mers are “lexicographically” ordered and we can use the notation $s_{k}^{i}$ to identify the k-mer associated to the decimal number $i$ ranging from $0$ to $4.k-1$. Following the above example, we can say that  $s^{376}_{6}=ACCTGA$.
 Let’s now consider a particular genome extracted from a particular organism and assume that we count the occurrence of all distinct k-mers present in this genome. We will denote by $c_{k}^{i}$ the count corresponding to the i-th k-mer. Then we can create a real vector of size $4.k$ as illustrated in the Figure 1 below: 
   
-  \begin{figure*}
+\begin{figure*}
 \includegraphics[keepaspectratio,width=12cm]{\jobname-Fig1.png}
 \raggedright
 \caption{\label{fig:wide}k-mer organization for k-mer and (m,n)-mer statistical distributions evaluation.}
@@ -158,7 +158,7 @@ MLeval (https://cran.r-project.org/web/packages/MLeval/index.html) is used to pl
 
 To execute the example, enter the following code:
   
-  ```{r, eval=TRUE}
+```{r, eval=TRUE}
 library(caret)
 # Add class information 
 classes <- replicate(nrow(mosquito), "mosquito.vir")
