@@ -1,6 +1,6 @@
 Package: mnmer
 Title: (m,n)-mer - A Simple and New Statistical Feature for viral Classification
-Version: 0.99.0
+Version: 0.99.1
 Authors@R: c(person(given = "Amanda",family = "Andrade", role = c("cre", "aut"), comment=c(ORCID="0000-0003-3530-7435"), email = "aandradebio@gmail.com"),
    	person(given = "Marco",family = "Grivet", comment=c(ORCID="0000-0001-5130-095X"), role = "aut"),
    	person(given = "Otavio",family = "Brustolini", comment=c(ORCID="0000-0001-8132-9753"), role= "aut"),
