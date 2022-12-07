@@ -1,6 +1,6 @@
 #' mnmer
 #' @aliases cmnmer mnmer MNmer
-#' @description Generates the feature matrix using conditional probability. 
+#' @description Generates the feature matrix using conditional probability. As default, all sequences with N+IUPAC content higher 10% than are removed.
 #'
 #' @param FASTAfile FASTA file \code{FASTAfile}
 #' @param k Int value of k \code{k}

@@ -21,7 +21,7 @@ mnmer(FASTAfile, k, m, pni = 0.1)
 Outputs a dataframe
 }
 \description{
-Generates the feature matrix using conditional probability.
+Generates the feature matrix using conditional probability. As default, all sequences with N+IUPAC content higher 10\% than are removed.
 }
 \examples{
 dir <-system.file("extdata", package="mnmer")

@@ -60,8 +60,8 @@ Assume we need to distinguish between viruses detected in mosquito samples and v
 The parameter ```k``` is set to choice for k-mer generation, while the parameter ```m``` is set to zero. Considering that the k-mers are conditioned to zero bases.
 
 ```
-mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
-plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,0)
+mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
+plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,0)
 ```
 
 #### Producing (m,n)-mers 
@@ -73,7 +73,7 @@ mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,1)
 plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,1)
 ```
 
-Bases other than A, C, T, and G were disregarded.
+All sequences with N + IUPAC bases content higher than 10% are removed from further analysis.
 
 For classification outside of the mnmer program, we utilize the (1,1)-mer feature matrices. Here's a real-world example of code:
 
