@@ -12,7 +12,7 @@ author:
 email: atrv@lncc.br
 package: mnmer
 output:
-  BiocStyle::pdf_document
+  BiocStyle::html_document
 abstract: |
   The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we present the mnmer function and show a pratical example of classification using mnmer output.
 vignette: |
@@ -28,6 +28,7 @@ The (m,n)-mer R package was created to summarize biological data into numerical 
 Since letters are a bit awkward from a mathematical viewpoint, lets univocally associate the digits $0$, $1$, $2$ and $3$ to letters A, C, G and T. Any order will do. Hence, each k-mer can be described by a unique base-4 integer number in the range from $0$ to $4.k-1$. As an example, consider the 6-mer ACCTGA and the association described above. Then the 6-mer ACCTGA can be represented as the base-4 number $011320$, which corresponds to the number $376$ in the decimal notation. 
 
 If we order all the k-mers according to these numbers, we say the k-mers are “lexicographically” ordered and we can use the notation $s_{k}^{i}$ to identify the k-mer associated to the decimal number $i$ ranging from $0$ to $4.k-1$. Following the above example, we can say that  $s^{376}_{6}=ACCTGA$.
+
 Let’s now consider a particular genome extracted from a particular organism and assume that we count the occurrence of all distinct k-mers present in this genome. We will denote by $c_{k}^{i}$ the count corresponding to the i-th k-mer. Then we can create a real vector of size $4.k$ as illustrated in the Figure 1 below: 
   
 \begin{figure*}
@@ -40,7 +41,7 @@ Since this counting is generally made for several organisms with different sizes
 
 Let’s define a vector $\underline{f}_{k}=(f_{k}^{0},f_{k}^{1},...,f_{k}^{4^{k}-1})$   as the formal descriptor of the particular organism as far as k-mer is concerned. 
 
-Please notice that each element of vector $\underline{f}_{k}$  is nonnegative and their sum is 1, which allow us to interpret this vector as a “probability density distribution” according to  statistical parlance.  
+Please notice that each element of vector $\underline{f}_{k}$ is nonnegative and their sum is 1, which allow us to interpret this vector as a “probability density distribution” according to  statistical parlance.  
 
 In the above example, consider the 6-mer ACCTGA and m and n respectively assuming the values 4 and 2. Hence we have $S_{6}=ACCTGA$ , $S_{4}^{-}=ACCT$ and $S_{2}^{+}=GA$ .
 Although we have used the superscripts – and + to respectively indicate the left and right part of the k-mer  $S_{k}$, they are also an m-mer and an n-mer on its own.
@@ -86,7 +87,7 @@ The \Githubpkg{labinfo-lncc/mnmer} R package was created to summarize biological
 
 \subsection{Dependencies}
 
-The package only needs \R{} 4.0.0 or later.
+The package needs \R{} 4.0.0 or later, Biostrings and Utils.
 
 \subsection{Instalation}
 
