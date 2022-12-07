@@ -6,14 +6,16 @@
 \alias{MNmer}
 \title{mnmer}
 \usage{
-mnmer(inputParameter1, inputParameter2, inputParameter3)
+mnmer(FASTAfile, k, m, pni = 0.1)
 }
 \arguments{
-\item{inputParameter1}{FASTA file \code{inputParameter1}}
+\item{FASTAfile}{FASTA file \code{FASTAfile}}
 
-\item{inputParameter2}{Int value of k \code{inputParameter2}}
+\item{k}{Int value of k \code{k}}
 
-\item{inputParameter3}{Int value of m \code{inputParameter3}}
+\item{m}{Int value of m \code{m}}
+
+\item{pni}{Cutoff percentage of N+IUPAC bases}
 }
 \value{
 Outputs a dataframe
@@ -23,7 +25,7 @@ Generates the feature matrix using conditional probability.
 }
 \examples{
 dir <-system.file("extdata", package="mnmer")
-mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
+mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
 
 }
 \keyword{(m,n)-mer}

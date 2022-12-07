@@ -5,6 +5,7 @@
 #' @param FASTAfile FASTA file \code{FASTAfile}
 #' @param k Int value of k \code{k}
 #' @param m Int value of m \code{m}
+#' @param pni Cutoff percentage of N+IUPAC bases
 #'
 #' @return Outputs a dataframe 
 #'
@@ -14,7 +15,7 @@
 #' 
 #' @examples
 #' dir <-system.file("extdata", package="mnmer")
-#' mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
+#' mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
 #' 
 mnmer <- function (FASTAfile, k, m, pni=0.1) {
     if (!file.exists(FASTAfile)) {
@@ -43,7 +44,7 @@ mnmer <- function (FASTAfile, k, m, pni=0.1) {
             tab <- rbind (tab,ts)
         }
         else {
-           print ( paste0 ("Warning: ", names(seqs)[i], " has a proportion of N + IUPAC bases = ", ni[5]) )
+           message("Warning: ", names(seqs)[i], " has a proportion of N + IUPAC bases = ", ni[5])
         }
     }
 
