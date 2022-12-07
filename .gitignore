@@ -29,4 +29,5 @@ unsrturl.bst
 .settings 
 .tm_properties
 .Rproj.user
-inst/doc
+./src/mnmercpp.o
+./src/mnmercpp.so

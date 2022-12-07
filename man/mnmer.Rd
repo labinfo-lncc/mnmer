@@ -14,6 +14,8 @@ mnmer(FASTAfile, k, m, pni = 0.1)
 \item{k}{Int value of k \code{k}}
 
 \item{m}{Int value of m \code{m}}
+
+\item{pni}{Cutoff percentage of N+IUPAC bases}
 }
 \value{
 Outputs a dataframe
@@ -23,7 +25,7 @@ Generates the feature matrix using conditional probability. As default, all sequ
 }
 \examples{
 dir <-system.file("extdata", package="mnmer")
-mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,0)
+mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
 
 }
 \keyword{(m,n)-mer}

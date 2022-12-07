@@ -5,6 +5,7 @@
 #' @param FASTAfile FASTA file \code{FASTAfile}
 #' @param k Int value of k \code{k}
 #' @param m Int value of m \code{m}
+#' @param pni Cutoff percentage of N+IUPAC bases
 #'
 #' @return Outputs a dataframe 
 #'
@@ -26,7 +27,7 @@ mnmer <- function (FASTAfile, k, m, pni=0.1) {
         stop("Fix the parameters")
     }
 
-    if (m > k)
+    if (k < m)
         stop ("k must be greater or equal to m")
 
     seqs <- readDNAStringSet (FASTAfile)
@@ -43,7 +44,7 @@ mnmer <- function (FASTAfile, k, m, pni=0.1) {
             tab <- rbind (tab,ts)
         }
         else {
-           print ( paste0 ("Warning: ", names(seqs)[i], " has a proportion of N + IUPAC bases = ", ni[5]) )
+           message("Warning: ", names(seqs)[i], " has a proportion of N + IUPAC bases = ", ni[5])
         }
     }
 
