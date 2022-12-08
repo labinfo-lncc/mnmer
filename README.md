@@ -35,6 +35,8 @@ The output table (Figure 3) includes the fasta file accession numbers as an ID c
 
 ```
 R version 4.0.0 or later
+Biostrings
+Utils
 ```
 
 ## Installation
