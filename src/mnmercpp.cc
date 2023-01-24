@@ -108,7 +108,7 @@ void save_string (string &res, vector<string> &vp, map<string,float> &mpta)
         if ((it=mpta.find (p)) != mpta.end())
             res += to_string(it->second) + ",";
         else
-            res += ",0.0";
+            res += "0.0,";
     
     res.back() = '\n';
 }
