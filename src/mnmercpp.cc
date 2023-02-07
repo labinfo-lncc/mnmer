@@ -9,16 +9,16 @@
 
 using namespace std;
 
-inline map<string,float> get_mmers (int k, int m, const string &s)
+inline map<string,float> get_mmers (int m, int n, const string &s)
 {
     string q, p1, p2;
     multimap<string,string> mmp;
     set<string> sm;
 
-    for (int i = 0; i < s.size()-k; ++i){
-        q = s.substr (i,k);
+    for (int i = 0; i < s.size()-m; ++i){
+        q = s.substr (i,m+n);
         p1 = q.substr (0,m);
-        p2 = q.substr (m,k);
+        p2 = q.substr (m,n);
 
         mmp.insert ({p1,p2});
         sm.insert (p1);
@@ -119,8 +119,9 @@ SEXP cmnmer (SEXP seq, SEXP kk, SEXP mm)
 {
     string sequence = CHAR(STRING_ELT(seq,0));
 
-    int k = asInteger (kk);
-    int m = asInteger (mm);
+    int m = asInteger (kk);
+    int n = asInteger (mm);
+    int k = m + n;
 
 //Get the lexicography of the 4 nucloetide
     vector<string> vp4 = lexnucl(pow(4,k), k);
@@ -129,10 +130,10 @@ SEXP cmnmer (SEXP seq, SEXP kk, SEXP mm)
     string result = "";
 //Header
     for (auto h: vp4)
-        result += h + ",";
+        result += h.insert(m,"|") + ",";
     result.back() = '\n';
     
-    map<string,float> mtab = get_mmers (k, m, sequence);
+    map<string,float> mtab = get_mmers (m, n, sequence);
 
     save_string (result, vp4, mtab);
 
