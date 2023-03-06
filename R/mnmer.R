@@ -27,9 +27,6 @@ mnmer <- function (FASTAfile, k, m, pni=0.1) {
         stop("Fix the parameters")
     }
 
-    if (k < m)
-        stop ("k must be greater or equal to m")
-
     seqs <- readDNAStringSet (FASTAfile)
     seqid <- c()
     tab <- data.frame()
