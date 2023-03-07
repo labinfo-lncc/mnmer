@@ -15,7 +15,7 @@ inline map<string,float> get_mmers (int m, int n, const string &s)
     multimap<string,string> mmp;
     set<string> sm;
 
-    for (int i = 0; i < s.size()-m; ++i){
+    for (int i = 0; i < s.size()-m-n; ++i){
         q = s.substr (i,m+n);
         p1 = q.substr (0,m);
         p2 = q.substr (m,n);
@@ -32,11 +32,11 @@ inline map<string,float> get_mmers (int m, int n, const string &s)
     float nc = float(sm.size());
 
     map<string,map<string,float>> mptab;
+    map<string,float> mpf;
 
     for (auto m: sm){
         ret = mmp.equal_range(m);
 
-        map<string,float> mpf;
 
         u = distance (ret.first,ret.second);
 
@@ -44,6 +44,7 @@ inline map<string,float> get_mmers (int m, int n, const string &s)
             mpf[it->second] += 1.0/(float(u)*nc);
         
         mptab[m] = mpf;
+        mpf.clear();
     }
 
     map<string,float> mdat;
@@ -115,12 +116,12 @@ void save_string (string &res, vector<string> &vp, map<string,float> &mpta)
 
 extern "C" {
 
-SEXP cmnmer (SEXP seq, SEXP kk, SEXP mm)
+SEXP cmnmer (SEXP seq, SEXP mm, SEXP nn)
 {
     string sequence = CHAR(STRING_ELT(seq,0));
 
-    int m = asInteger (kk);
-    int n = asInteger (mm);
+    int m = asInteger (mm);
+    int n = asInteger (nn);
     int k = m + n;
 
 //Get the lexicography of the 4 nucloetide
