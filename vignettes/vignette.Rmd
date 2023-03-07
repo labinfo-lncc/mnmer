@@ -27,9 +27,9 @@ The (m,n)-mer R package was created to summarize biological data into numerical 
 
 Since letters are a bit awkward from a mathematical viewpoint, lets univocally associate the digits $0$, $1$, $2$ and $3$ to letters A, C, G and T. Any order will do. Hence, each k-mer can be described by a unique base-4 integer number in the range from $0$ to $4.k-1$. As an example, consider the 6-mer ACCTGA and the association described above. Then the 6-mer ACCTGA can be represented as the base-4 number $011320$, which corresponds to the number $376$ in the decimal notation. 
 
-If we order all the k-mers according to these numbers, we say the k-mers are “lexicographically” ordered and we can use the notation $s_{k}^{i}$ to identify the k-mer associated to the decimal number $i$ ranging from $0$ to $4.k-1$. Following the above example, we can say that  $s^{376}_{6}=ACCTGA$.
+If we order all the k-mers according to these numbers, we say the k-mers are “lexicographically” ordered and we can use the notation $s_{m}^{i}$ to identify the k-mer associated to the decimal number $i$ ranging from $0$ to $4.k-1$. Following the above example, we can say that  $s^{376}_{6}=ACCTGA$.
 
-Let’s now consider a particular genome extracted from a particular organism and assume that we count the occurrence of all distinct k-mers present in this genome. We will denote by $c_{k}^{i}$ the count corresponding to the i-th k-mer. Then we can create a real vector of size $4.k$ as illustrated in the Figure 1 below: 
+Let’s now consider a particular genome extracted from a particular organism and assume that we count the occurrence of all distinct k-mers present in this genome. We will denote by $c_{m}^{i}$ the count corresponding to the i-th k-mer. Then we can create a real vector of size $4.k$ as illustrated in the Figure 1 below: 
   
 \begin{figure*}
 \includegraphics[keepaspectratio,width=12cm]{\jobname-Fig1.png}
@@ -37,15 +37,15 @@ Let’s now consider a particular genome extracted from a particular organism an
 \caption{\label{fig:wide}k-mer organization for k-mer and (m,n)-mer statistical distributions evaluation.}
 \end{figure*}
 
-Since this counting is generally made for several organisms with different sizes, for the sake of comparison it is more convenient express this count in relative terms. Similarly, we will denote by  as $f_{k}^{i}$ the relative frequency of k-mer $s_{k}^{i}$   which is computed as the division $f_{k}^{i}=\frac{c_{k}^{i}}{N_{k}}$   where ${N_{k}}$  is the total number of k-mers counted in this organism, that is, ${N_{k}}=\sum_{i=0}^{4^{k}-1}c_{k}^{i}$.
+Since this counting is generally made for several organisms with different sizes, for the sake of comparison it is more convenient express this count in relative terms. Similarly, we will denote by  as $f_{m}^{i}$ the relative frequency of k-mer $s_{m}^{i}$   which is computed as the division $f_{m}^{i}=\frac{c_{m}^{i}}{N_{m}}$   where ${N_{m}}$  is the total number of k-mers counted in this organism, that is, ${N_{m}}=\sum_{i=0}^{4^{m}-1}c_{m}^{i}$.
 
-Let’s define a vector $\underline{f}_{k}=(f_{k}^{0},f_{k}^{1},...,f_{k}^{4^{k}-1})$   as the formal descriptor of the particular organism as far as k-mer is concerned. 
+Let’s define a vector $\underline{f}_{m}=(f_{m}^{0},f_{m}^{1},...,f_{m}^{4^{m}-1})$   as the formal descriptor of the particular organism as far as k-mer is concerned. 
 
-Please notice that each element of vector $\underline{f}_{k}$ is nonnegative and their sum is 1, which allow us to interpret this vector as a “probability density distribution” according to  statistical parlance.  
+Please notice that each element of vector $\underline{f}_{m}$ is nonnegative and their sum is 1, which allow us to interpret this vector as a “probability density distribution” according to  statistical parlance.  
 
 In the above example, consider the 6-mer ACCTGA and m and n respectively assuming the values 4 and 2. Hence we have $S_{6}=ACCTGA$ , $S_{4}^{-}=ACCT$ and $S_{2}^{+}=GA$ .
-Although we have used the superscripts – and + to respectively indicate the left and right part of the k-mer  $S_{k}$, they are also an m-mer and an n-mer on its own.
-We propose the replacement of the unconditional frequency $f_{k}^{i}$ by the conditional frequency  $f_{m,n}^{i}$ which represents the relative frequency of the n-mer $S_{n}^{+}$ conditioned to the fact that the set of m bases that precedes it is $S_{m}^{-}$. The vector  so defined will be conveniently renamed $\underline{f}_{m,n}$ in order to be more explicit. By defining  $u/v$ as the result of the integer division of $u$ by $v$ then, based upon the classical result of conditional probabilities, we have $\underline{f}_{m,n}=(f_{m,n}^{0},f_{m,n}^{1},...,f_{m,n}^{4^{k}-1})$  where $f_{m,n}^{i}=\frac{f_{k}^{i]}}{f_{m}^{i/4^n}}$.
+Although we have used the superscripts – and + to respectively indicate the left and right part of the k-mer  $S_{m}$, they are also an m-mer and an n-mer on its own.
+We propose the replacement of the unconditional frequency $f_{m}^{i}$ by the conditional frequency  $f_{m,n}^{i}$ which represents the relative frequency of the n-mer $S_{n}^{+}$ conditioned to the fact that the set of m bases that precedes it is $S_{m}^{-}$. The vector  so defined will be conveniently renamed $\underline{f}_{m,n}$ in order to be more explicit. By defining  $u/v$ as the result of the integer division of $u$ by $v$ then, based upon the classical result of conditional probabilities, we have $\underline{f}_{m,n}=(f_{m,n}^{0},f_{m,n}^{1},...,f_{m,n}^{4^{m}-1})$  where $f_{m,n}^{i}=\frac{f_{m}^{i]}}{f_{m}^{i/4^n}}$.
 
 Again in our example, $f_{6}^{376}$, the relative frequency of 6-mer  ACCTGA must be divided by $f_{4}^{23}$, which is the relative frequency of $S_{4}^{23}=ACCT$ .
 
@@ -107,9 +107,9 @@ The parameters receives:
   
 `file` = file = FASTA file. It could be a multiFASTA. This file can be .gz compressed or not. 
 
-`k` = Value of k for k-mer generation. Needs to be different from zero. 
+`m` = Value of k for k-mer generation. Needs to be different from zero. 
 
-`m` = Value of m for (m,n)-mer generation in the format of (m, k-m). In case of k-mer generation, m should be zero as (0,k).
+`n` = Value of m for (m,n)-mer generation in the format of (m, k-m). In case of k-mer generation, m should be zero as (0,k).
 
 As default, all sequences with high content of N + IUPAC bases will be removed from further analysis given the little informative nature of those bases. In that case, the mnmer function prints the following warning:
   
@@ -135,7 +135,7 @@ dir <-system.file("extdata", package="mnmer")
 
 For k-mer generation, the parameter k is set to choice, while the parameter m is set to zero. Given that the k-mers have been conditioned to zero bases.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
 plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,0)
 ```
@@ -146,7 +146,7 @@ The user specifies the k and m parameters for (mn)-mer generation.
 
 For example, k = 2 and m = 1 produce the (1,1)-mer, in which one base is conditioned on the frequency of the base before it. Bases other than A, C, T, and G were disregarded.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,1)
 plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,1)
 ```
@@ -159,7 +159,7 @@ MLeval (https://cran.r-project.org/web/packages/MLeval/index.html) is used to pl
 
 To execute the example, enter the following code:
   
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 library(caret)
 # Add class information 
 classes <- replicate(nrow(mosquito), "mosquito.vir")
