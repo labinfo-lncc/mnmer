@@ -173,7 +173,7 @@ cout <<i <<'\r';
         else
             seq += s;
 
-    if (su.find(i-1) != su.end())
+    if ( checkseq (seq,pni) && (su.find(i-1) != su.end()) )
         mps[id] = seq;
 
     f.close();
