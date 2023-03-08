@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 #include <map>
 #include <set>
@@ -167,6 +168,7 @@ map<string,string> read_fasta_rand (string file, unsigned num, int size, float p
             id = s.substr (1,s.find(" ")-1);
             seq = "";
             ++i;
+cout <<i <<'\r';
         }       
         else
             seq += s;
