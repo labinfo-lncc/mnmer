@@ -22,7 +22,7 @@ mnmer <- function (seqs, m, n)
     m <- as.integer(m)
     n <- as.integer(n)
 
-    if (typeof(k) !="integer" || typeof(m)!="integer" || m == 0)
+    if (typeof(m) !="integer" || typeof(n)!="integer" || m == 0)
         stop("ERROR: parameters m and n must be integer types and m must be different zero.")
     
     seqid <- c()
@@ -69,7 +69,7 @@ readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.02)
         return(dsqs)
     }
 
-    fasstr <- .Call ("readrandFASTA", size, pni)
+    fasstr <- .Call ("readrandFASTA", FASTAfile, size, pni)
     fastab <- read.table(text = fasstr, header = FALSE, sep="\t")
 
     dsqs <- DNAStringSet (fastab[,2])

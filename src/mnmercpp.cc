@@ -1,10 +1,7 @@
 #include <fstream>
-#include <string>
 #include <map>
 #include <set>
 #include <vector>
-#include <algorithm>
-#include <cmath>
 #include <random>
 #include <chrono>
 #include <unordered_set>
@@ -121,20 +118,7 @@ void save_string (string &res, vector<string> &vp, map<string,float> &mpta)
 
 //read FASTA
 
-//Get the number of sequences 
-inline unsigned num_seqs (string file)
-{
-    ifstream f (file);
-    string s;
-    unsigned n = 0;
-    while (getline (f,s))
-        if (s[0] == '>')
-            ++n;
-    f.close();
-    return n;
-}
-
-inline bool checkseq (string sq, float pni)
+inline bool checkseq (const string &sq, float pni)
 {
     if (sq == "") return false;
     
@@ -143,7 +127,7 @@ inline bool checkseq (string sq, float pni)
     unordered_set<char> snuc ( {'A','T','C','G','a','t','c','g'} );
 
     for (auto c: sq){
-        if (snuc.find (c) != snuc.end())
+        if (snuc.find (c) == snuc.end())
             ++n;
         if ( (float(n)/float(sz)) >= pni )
             return false;
@@ -153,36 +137,35 @@ inline bool checkseq (string sq, float pni)
     
 }
 
-map<string,string> read_fasta_rand (string file, int size, float pni)
+map<string,string> read_fasta_rand (string file, unsigned num, int size, float pni)
 {
-    unordered_set<unsigned> su;
+    unordered_set<int> su;
     mt19937 eng (chrono::system_clock::now().time_since_epoch().count());
-    uniform_int_distribution<unsigned> unif (0, size);
+    uniform_int_distribution<int> unif (0, num-1);
 
     map<string,string> mps;
 
     while (su.size() != size)
         su.insert (unif(eng));
 
-    unsigned i = 0;
+    int i = 0;
     ifstream f (file);
     string s, id, seq = "";
 
     while (getline (f,s))
         if (s[0] == '>'){
-            
             if ( checkseq (seq,pni) && (su.find(i-1) != su.end()) ){
-                mps[id] = seq;
-                ++i;              
+                mps[id] = seq;         
             }
-            
-            if (i == size){
+
+            if (mps.size() == size){
                 f.close();
                 return mps;
             }
 
             id = s.substr (1,s.find(" ")-1);
             seq = "";
+            ++i;
         }       
         else
             seq += s;
@@ -194,6 +177,20 @@ map<string,string> read_fasta_rand (string file, int size, float pni)
 
     return mps;
 }
+
+inline unsigned num_seqs (string &file)
+{
+    ifstream f (file);
+    string s;
+    unsigned n = 0;
+    while (getline (f,s))
+        if (s[0] == '>')
+            ++n;
+    f.close();
+    return n;
+}
+
+
 
 
 extern "C" {
@@ -238,7 +235,7 @@ SEXP cmnmer (SEXP seq, SEXP mm, SEXP nn)
 
         unsigned num = num_seqs (file);
 
-        map<string,string> mpse = read_fasta_rand (file, size, pni);
+        map<string,string> mpse = read_fasta_rand (file, num ,size, pni);
 
         string sf = "";
 
