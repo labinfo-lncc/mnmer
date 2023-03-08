@@ -2,6 +2,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <algorithm>
 #include <random>
 #include <chrono>
 #include <unordered_set>
