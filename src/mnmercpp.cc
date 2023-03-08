@@ -239,7 +239,7 @@ SEXP cmnmer (SEXP seq, SEXP mm, SEXP nn)
         unsigned num = num_seqs (file);
 
         map<string,string> mpse = read_fasta_rand (file, num ,size, pni);
-cout <<'\n';
+cout <<num <<'\n';
 
         string sf = "";
 
