@@ -69,10 +69,10 @@ readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.02)
         return(dsqs)
     }
 
-    fasstr <- .Call ("cmnmer", FASTAfile, size, pni)
+    fasstr <- .Call ("readrandFASTA", FASTAfile, size, pni)
     fastab <- read.table(text = fasstr, header = FALSE, sep="\t")
 
-    dsqs <- read.DNAStringSet (fastab[,2])
+    dsqs <- DNAStringSet (fastab[,2])
     names(dsqs) <- fastab[,1]
 
     return(dsqs)
