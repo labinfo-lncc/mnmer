@@ -49,7 +49,7 @@ readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.02)
         stop(paste0("File: ", FASTAfile, " does not found!"))
     
     if (!rand){
-        seqs <- readDNAStringSet (FASTAfile)
+        seqs <- read.DNAStringSet (FASTAfile)
         seqid <- c()
         tab <- data.frame()
 
@@ -72,7 +72,7 @@ readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.02)
     fasstr <- .Call ("readrandFASTA", FASTAfile, size, pni)
     fastab <- read.table(text = fasstr, header = FALSE, sep="\t")
 
-    dsqs <- DNAStringSet (fastab[,2])
+    dsqs <- read.DNAStringSet (fastab[,2])
     names(dsqs) <- fastab[,1]
 
     return(dsqs)
