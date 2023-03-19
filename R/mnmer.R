@@ -54,7 +54,7 @@ readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.02)
         tab <- data.frame()
 
         maxsize <- ifelse (size == 0, length(seqs), size)
-        dsqs <- DNAStringSet()
+        dsqs <- read.DNAStringSet()
         
         for (i in 1:maxsize){
             ni <-  alphabetFrequency (seqs[i], baseOnly=TRUE, as.prob=TRUE)
