@@ -27,6 +27,7 @@ mnmer <- function (seqs, m, n)
     
     seqid <- c()
     tab <- data.frame()
+    pb = txtProgressBar(min = 0, max = length(seqs), initial = 0) 
 
     for (i in 1:length(seqs)){
         seqid <- c(seqid,names(seqs)[i])
@@ -34,6 +35,7 @@ mnmer <- function (seqs, m, n)
         ctab <- .Call("cmnmer", sqs, m, n)
         ts <- read.csv(text = ctab, header = TRUE)
         tab <- rbind (tab,ts)
+        setTxtProgressBar(pb,i)
     }
 
     tab <- cbind (seqid,tab)
