@@ -38,6 +38,8 @@ mnmer <- function (seqs, m, n)
         setTxtProgressBar(pb,i)
     }
 
+    close(pb)
+    
     tab <- cbind (seqid,tab)
 
     return(tab)
