@@ -121,36 +121,36 @@ ACCTGA and the association described above. Then the 6-mer ACCTGA can be
 represented as the base-4 number <span class="math inline">\(011320\)</span>, which corresponds to the number
 <span class="math inline">\(376\)</span> in the decimal notation.</p>
 <p>If we order all the k-mers according to these numbers, we say the
-k-mers are “lexicographically” ordered and we can use the notation <span class="math inline">\(s_{k}^{i}\)</span> to identify the k-mer
+k-mers are “lexicographically” ordered and we can use the notation <span class="math inline">\(s_{m}^{i}\)</span> to identify the k-mer
 associated to the decimal number <span class="math inline">\(i\)</span>
 ranging from <span class="math inline">\(0\)</span> to <span class="math inline">\(4.k-1\)</span>. Following the above example, we
 can say that <span class="math inline">\(s^{376}_{6}=ACCTGA\)</span>.</p>
 <p>Let’s now consider a particular genome extracted from a particular
 organism and assume that we count the occurrence of all distinct k-mers
-present in this genome. We will denote by <span class="math inline">\(c_{k}^{i}\)</span> the count corresponding to the
+present in this genome. We will denote by <span class="math inline">\(c_{m}^{i}\)</span> the count corresponding to the
 i-th k-mer. Then we can create a real vector of size <span class="math inline">\(4.k\)</span> as illustrated in the Figure 1
 below:</p>
 <p>Since this counting is generally made for several organisms with
 different sizes, for the sake of comparison it is more convenient
 express this count in relative terms. Similarly, we will denote by as
-<span class="math inline">\(f_{k}^{i}\)</span> the relative frequency of
-k-mer <span class="math inline">\(s_{k}^{i}\)</span> which is computed
-as the division <span class="math inline">\(f_{k}^{i}=\frac{c_{k}^{i}}{N_{k}}\)</span> where
-<span class="math inline">\({N_{k}}\)</span> is the total number of
-k-mers counted in this organism, that is, <span class="math inline">\({N_{k}}=\sum_{i=0}^{4^{k}-1}c_{k}^{i}\)</span>.</p>
-<p>Let’s define a vector <span class="math inline">\(\underline{f}_{k}=(f_{k}^{0},f_{k}^{1},...,f_{k}^{4^{k}-1})\)</span>
+<span class="math inline">\(f_{m}^{i}\)</span> the relative frequency of
+k-mer <span class="math inline">\(s_{m}^{i}\)</span> which is computed
+as the division <span class="math inline">\(f_{m}^{i}=\frac{c_{m}^{i}}{N_{m}}\)</span> where
+<span class="math inline">\({N_{m}}\)</span> is the total number of
+k-mers counted in this organism, that is, <span class="math inline">\({N_{m}}=\sum_{i=0}^{4^{m}-1}c_{m}^{i}\)</span>.</p>
+<p>Let’s define a vector <span class="math inline">\(\underline{f}_{m}=(f_{m}^{0},f_{m}^{1},...,f_{m}^{4^{m}-1})\)</span>
 as the formal descriptor of the particular organism as far as k-mer is
 concerned.</p>
-<p>Please notice that each element of vector <span class="math inline">\(\underline{f}_{k}\)</span> is nonnegative and
+<p>Please notice that each element of vector <span class="math inline">\(\underline{f}_{m}\)</span> is nonnegative and
 their sum is 1, which allow us to interpret this vector as a
 “probability density distribution” according to statistical
 parlance.</p>
 <p>In the above example, consider the 6-mer ACCTGA and m and n
 respectively assuming the values 4 and 2. Hence we have <span class="math inline">\(S_{6}=ACCTGA\)</span> , <span class="math inline">\(S_{4}^{-}=ACCT\)</span> and <span class="math inline">\(S_{2}^{+}=GA\)</span> . Although we have used the
 superscripts – and + to respectively indicate the left and right part of
-the k-mer <span class="math inline">\(S_{k}\)</span>, they are also an
+the k-mer <span class="math inline">\(S_{m}\)</span>, they are also an
 m-mer and an n-mer on its own. We propose the replacement of the
-unconditional frequency <span class="math inline">\(f_{k}^{i}\)</span>
+unconditional frequency <span class="math inline">\(f_{m}^{i}\)</span>
 by the conditional frequency <span class="math inline">\(f_{m,n}^{i}\)</span> which represents the relative
 frequency of the n-mer <span class="math inline">\(S_{n}^{+}\)</span>
 conditioned to the fact that the set of m bases that precedes it is
@@ -159,8 +159,8 @@ will be conveniently renamed <span class="math inline">\(\underline{f}_{m,n}\)</
 explicit. By defining <span class="math inline">\(u/v\)</span> as the
 result of the integer division of <span class="math inline">\(u\)</span>
 by <span class="math inline">\(v\)</span> then, based upon the classical
-result of conditional probabilities, we have <span class="math inline">\(\underline{f}_{m,n}=(f_{m,n}^{0},f_{m,n}^{1},...,f_{m,n}^{4^{k}-1})\)</span>
-where <span class="math inline">\(f_{m,n}^{i}=\frac{f_{k}^{i]}}{f_{m}^{i/4^n}}\)</span>.</p>
+result of conditional probabilities, we have <span class="math inline">\(\underline{f}_{m,n}=(f_{m,n}^{0},f_{m,n}^{1},...,f_{m,n}^{4^{m}-1})\)</span>
+where <span class="math inline">\(f_{m,n}^{i}=\frac{f_{m}^{i]}}{f_{m}^{i/4^n}}\)</span>.</p>
 <p>Again in our example, <span class="math inline">\(f_{6}^{376}\)</span>, the relative frequency of
 6-mer ACCTGA must be divided by <span class="math inline">\(f_{4}^{23}\)</span>, which is the relative
 frequency of <span class="math inline">\(S_{4}^{23}=ACCT\)</span> .</p>
@@ -197,9 +197,9 @@ create both k-mers and (m,n)-mers.</p>
 <p>The parameters receives:</p>
 <p><code>file</code> = file = FASTA file. It could be a multiFASTA. This
 file can be .gz compressed or not.</p>
-<p><code>k</code> = Value of k for k-mer generation. Needs to be
+<p><code>m</code> = Value of k for k-mer generation. Needs to be
 different from zero.</p>
-<p><code>m</code> = Value of m for (m,n)-mer generation in the format of
+<p><code>n</code> = Value of m for (m,n)-mer generation in the format of
 (m, k-m). In case of k-mer generation, m should be zero as (0,k).</p>
 <p>As default, all sequences with high content of N + IUPAC bases will
 be removed from further analysis given the little informative nature of
@@ -233,6 +233,9 @@ FASTA files can be found in the extdata folder.</p>
 <pre><code><span><span class="co">## Loading required package: stats4</span></span></code></pre>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## Attaching package: 'S4Vectors'</span></span></code></pre>
+<pre><code><span><span class="co">## The following object is masked from 'package:utils':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     findMatches</span></span></code></pre>
 <pre><code><span><span class="co">## The following objects are masked from 'package:base':</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     expand.grid, I, unname</span></span></code></pre>
@@ -244,12 +247,12 @@ FASTA files can be found in the extdata folder.</p>
 <pre><code><span><span class="co">## The following object is masked from 'package:base':</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##     strsplit</span></span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dir</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"mnmer"</span><span class="op">)</span></span></code></pre></div>
 <p>For k-mer generation, the parameter k is set to choice, while the
 parameter m is set to zero. Given that the k-mers have been conditioned
 to zero bases.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mosquito_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p>The user specifies the k and m parameters for (mn)-mer
@@ -257,7 +260,7 @@ generation.</p>
 <p>For example, k = 2 and m = 1 produce the (1,1)-mer, in which one base
 is conditioned on the frequency of the base before it. Bases other than
 A, C, T, and G were disregarded.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mosquito_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>Here, we utilize the (1,1)-mer feature matrices generated by the
@@ -271,12 +274,9 @@ that further regulate how the train function creates models.</p>
 <p>MLeval (<a href="https://cran.r-project.org/web/packages/MLeval/index.html" class="external-link uri">https://cran.r-project.org/web/packages/MLeval/index.html</a>)
 is used to plot performance metrics.</p>
 <p>To execute the example, enter the following code:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Loading required package: ggplot2</span></span></code></pre>
-<pre><code><span><span class="co">## Loading required package: lattice</span></span></code></pre>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Add class information </span></span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
+<span><span class="co"># Add class information </span></span>
 <span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mosquito</span><span class="op">)</span>, <span class="st">"mosquito.vir"</span><span class="op">)</span></span>
 <span><span class="va">featureMatrix_mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">mosquito</span>,<span class="va">classes</span><span class="op">)</span></span>
 <span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">plant</span><span class="op">)</span>, <span class="st">"plant.vir"</span><span class="op">)</span></span>
@@ -296,35 +296,15 @@ is used to plot performance metrics.</p>
 <span>                    data<span class="op">=</span><span class="va">train</span>, </span>
 <span>                    method<span class="op">=</span><span class="st">"rf"</span>, </span>
 <span>                    preProc<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>, </span>
-<span>                    trControl<span class="op">=</span><span class="va">control</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in train.default(x, y, weights = w, ...): The metric "Accuracy" was not</span></span>
-<span><span class="co">## in the result set. ROC will be used instead.</span></span></code></pre>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">MLeval</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MLeval/man/evalm.html" class="external-link">evalm</a></span><span class="op">(</span><span class="va">roc</span><span class="op">)</span> <span class="co"># Make the ROC plot</span></span></code></pre></div>
-<pre><code><span><span class="co">## ***MLeval: Machine Learning Model Evaluation***</span></span></code></pre>
-<pre><code><span><span class="co">## Input: caret train function object</span></span></code></pre>
-<pre><code><span><span class="co">## Not averaging probs.</span></span></code></pre>
-<pre><code><span><span class="co">## Group 1 type: cv</span></span></code></pre>
-<pre><code><span><span class="co">## Observations: 40</span></span></code></pre>
-<pre><code><span><span class="co">## Number of groups: 1</span></span></code></pre>
-<pre><code><span><span class="co">## Observations per group: 40</span></span></code></pre>
-<pre><code><span><span class="co">## Positive: plant.vir</span></span></code></pre>
-<pre><code><span><span class="co">## Negative: mosquito.vir</span></span></code></pre>
-<pre><code><span><span class="co">## Group: Group 1</span></span></code></pre>
-<pre><code><span><span class="co">## Positive: 20</span></span></code></pre>
-<pre><code><span><span class="co">## Negative: 20</span></span></code></pre>
-<pre><code><span><span class="co">## ***Performance Metrics***</span></span></code></pre>
-<p><img src="vignette_files/figure-html/unnamed-chunk-6-1.png" width="700"><img src="vignette_files/figure-html/unnamed-chunk-6-2.png" width="700"><img src="vignette_files/figure-html/unnamed-chunk-6-3.png" width="700"></p>
-<pre><code><span><span class="co">## Group 1 Optimal Informedness = 1</span></span></code></pre>
-<pre><code><span><span class="co">## Group 1 AUC-ROC = 1</span></span></code></pre>
-<p><img src="vignette_files/figure-html/unnamed-chunk-6-4.png" width="700"></p>
-<pre><code><span><span class="co">## R version 4.2.2 (2022-10-31)</span></span>
+<span>                    trControl<span class="op">=</span><span class="va">control</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">MLeval</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MLeval/man/evalm.html" class="external-link">evalm</a></span><span class="op">(</span><span class="va">roc</span><span class="op">)</span> <span class="co"># Make the ROC plot</span></span></code></pre></div>
+<pre><code><span><span class="co">## R version 4.3.0 (2023-04-21)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
 <span><span class="co">## Running under: Ubuntu 22.04.2 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
-<span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
-<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so</span></span>
+<span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">##  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       </span></span>
@@ -332,48 +312,33 @@ is used to plot performance metrics.</p>
 <span><span class="co">##  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          </span></span>
 <span><span class="co">## [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   </span></span>
 <span><span class="co">## </span></span>
+<span><span class="co">## time zone: UTC</span></span>
+<span><span class="co">## tzcode source: system (glibc)</span></span>
+<span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
 <span><span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] caret_6.0-93        lattice_0.20-45     ggplot2_3.4.1      </span></span>
-<span><span class="co">##  [4] mnmer_0.99.1        Biostrings_2.66.0   GenomeInfoDb_1.34.9</span></span>
-<span><span class="co">##  [7] XVector_0.38.0      IRanges_2.32.0      S4Vectors_0.36.2   </span></span>
-<span><span class="co">## [10] BiocGenerics_0.44.0 BiocStyle_2.26.0   </span></span>
+<span><span class="co">## [1] mnmer_0.99.1        Biostrings_2.68.0   GenomeInfoDb_1.36.0</span></span>
+<span><span class="co">## [4] XVector_0.40.0      IRanges_2.34.0      S4Vectors_0.38.0   </span></span>
+<span><span class="co">## [7] BiocGenerics_0.46.0 BiocStyle_2.28.0   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] MLeval_0.3             nlme_3.1-160           bitops_1.0-7          </span></span>
-<span><span class="co">##  [4] fs_1.6.1               lubridate_1.9.2        rprojroot_2.0.3       </span></span>
-<span><span class="co">##  [7] tools_4.2.2            bslib_0.4.2            utf8_1.2.3            </span></span>
-<span><span class="co">## [10] R6_2.5.1               rpart_4.1.19           colorspace_2.1-0      </span></span>
-<span><span class="co">## [13] nnet_7.3-18            withr_2.5.0            tidyselect_1.2.0      </span></span>
-<span><span class="co">## [16] compiler_4.2.2         textshaping_0.3.6      cli_3.6.0             </span></span>
-<span><span class="co">## [19] desc_1.4.2             labeling_0.4.2         bookdown_0.33         </span></span>
-<span><span class="co">## [22] sass_0.4.5             scales_1.2.1           randomForest_4.7-1.1  </span></span>
-<span><span class="co">## [25] pkgdown_2.0.7          systemfonts_1.0.4      stringr_1.5.0         </span></span>
-<span><span class="co">## [28] digest_0.6.31          rmarkdown_2.20         pkgconfig_2.0.3       </span></span>
-<span><span class="co">## [31] htmltools_0.5.4        parallelly_1.34.0      highr_0.10            </span></span>
-<span><span class="co">## [34] fastmap_1.1.1          rlang_1.0.6            farver_2.1.1          </span></span>
-<span><span class="co">## [37] jquerylib_0.1.4        generics_0.1.3         jsonlite_1.8.4        </span></span>
-<span><span class="co">## [40] ModelMetrics_1.2.2.2   dplyr_1.1.0            RCurl_1.98-1.10       </span></span>
-<span><span class="co">## [43] magrittr_2.0.3         GenomeInfoDbData_1.2.9 Matrix_1.5-1          </span></span>
-<span><span class="co">## [46] Rcpp_1.0.10            munsell_0.5.0          fansi_1.0.4           </span></span>
-<span><span class="co">## [49] lifecycle_1.0.3        pROC_1.18.0            stringi_1.7.12        </span></span>
-<span><span class="co">## [52] yaml_2.3.7             MASS_7.3-58.1          zlibbioc_1.44.0       </span></span>
-<span><span class="co">## [55] plyr_1.8.8             recipes_1.0.5          grid_4.2.2            </span></span>
-<span><span class="co">## [58] parallel_4.2.2         listenv_0.9.0          crayon_1.5.2          </span></span>
-<span><span class="co">## [61] splines_4.2.2          knitr_1.42             pillar_1.8.1          </span></span>
-<span><span class="co">## [64] future.apply_1.10.0    reshape2_1.4.4         codetools_0.2-18      </span></span>
-<span><span class="co">## [67] glue_1.6.2             evaluate_0.20          data.table_1.14.8     </span></span>
-<span><span class="co">## [70] BiocManager_1.30.20    vctrs_0.5.2            foreach_1.5.2         </span></span>
-<span><span class="co">## [73] gtable_0.3.1           purrr_1.0.1            future_1.32.0         </span></span>
-<span><span class="co">## [76] cachem_1.0.7           xfun_0.37              gower_1.0.1           </span></span>
-<span><span class="co">## [79] prodlim_2019.11.13     ragg_1.2.5             class_7.3-20          </span></span>
-<span><span class="co">## [82] survival_3.4-0         timeDate_4022.108      tibble_3.2.0          </span></span>
-<span><span class="co">## [85] iterators_1.0.14       memoise_2.0.1          hardhat_1.2.0         </span></span>
-<span><span class="co">## [88] lava_1.7.2.1           timechange_0.2.0       globals_0.16.2        </span></span>
-<span><span class="co">## [91] ipred_0.9-14</span></span></code></pre>
+<span><span class="co">##  [1] jsonlite_1.8.4          crayon_1.5.2            compiler_4.3.0         </span></span>
+<span><span class="co">##  [4] BiocManager_1.30.20     stringr_1.5.0           bitops_1.0-7           </span></span>
+<span><span class="co">##  [7] jquerylib_0.1.4         systemfonts_1.0.4       textshaping_0.3.6      </span></span>
+<span><span class="co">## [10] yaml_2.3.7              fastmap_1.1.1           R6_2.5.1               </span></span>
+<span><span class="co">## [13] knitr_1.42              bookdown_0.33           desc_1.4.2             </span></span>
+<span><span class="co">## [16] rprojroot_2.0.3         GenomeInfoDbData_1.2.10 bslib_0.4.2            </span></span>
+<span><span class="co">## [19] rlang_1.1.0             cachem_1.0.7            stringi_1.7.12         </span></span>
+<span><span class="co">## [22] xfun_0.39               fs_1.6.2                sass_0.4.5             </span></span>
+<span><span class="co">## [25] memoise_2.0.1           cli_3.6.1               pkgdown_2.0.7          </span></span>
+<span><span class="co">## [28] magrittr_2.0.3          zlibbioc_1.46.0         digest_0.6.31          </span></span>
+<span><span class="co">## [31] lifecycle_1.0.3         vctrs_0.6.2             evaluate_0.20          </span></span>
+<span><span class="co">## [34] glue_1.6.2              ragg_1.2.5              RCurl_1.98-1.12        </span></span>
+<span><span class="co">## [37] rmarkdown_2.21          purrr_1.0.1             tools_4.3.0            </span></span>
+<span><span class="co">## [40] htmltools_0.5.5</span></span></code></pre>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

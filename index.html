@@ -111,14 +111,14 @@ Utils</code></pre>
 <div class="section level4">
 <h4 id="producing-k-mers">Producing k-mers<a class="anchor" aria-label="anchor" href="#producing-k-mers"></a>
 </h4>
-<p>The parameter <code>k</code> is set to choice for k-mer generation, while the parameter <code>m</code> is set to zero. Considering that the k-mers are conditioned to zero bases.</p>
+<p>The parameter <code>m</code> is set to choice for k-mer generation, while the parameter <code>n</code> is set to zero. Considering that the k-mers are conditioned to zero bases.</p>
 <pre><code><span><span class="va">mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mosquito_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="producing-mn-mers">Producing (m,n)-mers<a class="anchor" aria-label="anchor" href="#producing-mn-mers"></a>
 </h4>
-<p>The <code>k</code> and <code>m</code> parameters are chosen by the user for mn-mer creation. For instance, <code>k = 2</code> and <code>m = 1</code> yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.</p>
+<p>The <code>m</code> and <code>n</code> parameters are chosen by the user for mn-mer creation. For instance, <code>m = 1</code> and <code>m = 1</code> yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.</p>
 <pre><code><span><span class="va">mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mosquito_vir.fasta"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre>
 <p>All sequences with N + IUPAC bases content higher than 10% are removed from further analysis.</p>
