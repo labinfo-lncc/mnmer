@@ -1,9 +1,12 @@
-#include <string>
+#include <iostream>
+#include <fstream>
 #include <map>
 #include <set>
 #include <vector>
 #include <algorithm>
-#include <cmath>
+#include <random>
+#include <chrono>
+#include <unordered_set>
 #include <R.h>
 #include <Rdefines.h>
 
@@ -15,7 +18,7 @@ inline map<string,float> get_mmers (int m, int n, const string &s)
     multimap<string,string> mmp;
     set<string> sm;
 
-    for (int i = 0; i < s.size()-m; ++i){
+    for (int i = 0; i < s.size()-m-n; ++i){
         q = s.substr (i,m+n);
         p1 = q.substr (0,m);
         p2 = q.substr (m,n);
@@ -32,11 +35,11 @@ inline map<string,float> get_mmers (int m, int n, const string &s)
     float nc = float(sm.size());
 
     map<string,map<string,float>> mptab;
+    map<string,float> mpf;
 
     for (auto m: sm){
         ret = mmp.equal_range(m);
 
-        map<string,float> mpf;
 
         u = distance (ret.first,ret.second);
 
@@ -44,6 +47,7 @@ inline map<string,float> get_mmers (int m, int n, const string &s)
             mpf[it->second] += 1.0/(float(u)*nc);
         
         mptab[m] = mpf;
+        mpf.clear();
     }
 
     map<string,float> mdat;
@@ -113,14 +117,93 @@ void save_string (string &res, vector<string> &vp, map<string,float> &mpta)
     res.back() = '\n';
 }
 
+
+//read FASTA
+
+inline bool checkseq (const string &sq, float pni)
+{
+    if (sq == "") return false;
+    
+    unsigned sz = sq.size();
+    unsigned n = 0;
+    unordered_set<char> snuc ( {'A','T','C','G','a','t','c','g'} );
+
+    for (auto c: sq){
+        if (snuc.find (c) == snuc.end())
+            ++n;
+        if ( (float(n)/float(sz)) >= pni )
+            return false;
+    }
+
+    return true;
+    
+}
+
+map<string,string> read_fasta_rand (string file, unsigned num, int size, float pni)
+{
+    unordered_set<int> su;
+    mt19937 eng (chrono::system_clock::now().time_since_epoch().count());
+    uniform_int_distribution<int> unif (0, num-1);
+
+    map<string,string> mps;
+
+    while (su.size() != size)
+        su.insert (unif(eng));
+
+    int i = 0;
+    ifstream f (file);
+    string s, id, seq = "";
+
+    while (getline (f,s))
+        if (s[0] == '>'){
+            if ( checkseq (seq,pni) && (su.find(i-1) != su.end()) ){
+                mps[id] = seq;         
+            }
+
+            if (mps.size() == size){
+                f.close();
+                return mps;
+            }
+
+            id = s.substr (1,s.find(" ")-1);
+            seq = "";
+            ++i;
+cout <<i <<'\r';
+        }       
+        else
+            seq += s;
+
+    if ( checkseq (seq,pni) && (su.find(i-1) != su.end()) )
+        mps[id] = seq;
+
+    f.close();
+
+    return mps;
+}
+
+inline unsigned num_seqs (string &file)
+{
+    ifstream f (file);
+    string s;
+    unsigned n = 0;
+    while (getline (f,s))
+        if (s[0] == '>')
+            ++n;
+    f.close();
+    return n;
+}
+
+
+
+
 extern "C" {
 
-SEXP cmnmer (SEXP seq, SEXP kk, SEXP mm)
+SEXP cmnmer (SEXP seq, SEXP mm, SEXP nn)
 {
     string sequence = CHAR(STRING_ELT(seq,0));
 
-    int m = asInteger (kk);
-    int n = asInteger (mm);
+    int m = asInteger (mm);
+    int n = asInteger (nn);
     int k = m + n;
 
 //Get the lexicography of the 4 nucloetide
@@ -145,5 +228,31 @@ SEXP cmnmer (SEXP seq, SEXP kk, SEXP mm)
 
     return Stab;
 }
+
+//Read random FASTA
+    SEXP readrandFASTA (SEXP rfile, SEXP rsize, SEXP rpni)
+    {
+        string  file = CHAR(STRING_ELT(rfile,0));
+        unsigned size = asInteger (rsize);
+        float pni = asReal (rpni);
+
+        unsigned num = num_seqs (file);
+
+        map<string,string> mpse = read_fasta_rand (file, num ,size, pni);
+cout <<"Total number of sequence in the file: " <<num <<'\n';
+
+        string sf = "";
+
+        for (auto p: mpse)
+            sf += p.first + "\t" + p.second + "\n";
+        
+        SEXP cstr = allocVector(STRSXP, sf.size());
+        
+        PROTECT (cstr);
+        cstr = mkString(sf.c_str());
+  	    UNPROTECT(1);
+
+        return cstr;
+    }
 
 }

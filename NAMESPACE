@@ -1,6 +1,8 @@
 exportPattern("^[[:alpha:]]+")
 useDynLib(mnmer, cmnmer)
+useDynLib(mnmer, readrandFASTA)
 export(cmnmer)
+export(readrandFASTA)
 importFrom("utils", "read.csv")
 importFrom("Biostrings", "readDNAStringSet")
 importFrom("Biostrings", "alphabetFrequency")

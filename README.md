@@ -59,7 +59,7 @@ Assume we need to distinguish between viruses detected in mosquito samples and v
 
 #### Producing k-mers
 
-The parameter ```k``` is set to choice for k-mer generation, while the parameter ```m``` is set to zero. Considering that the k-mers are conditioned to zero bases.
+The parameter ```m``` is set to choice for k-mer generation, while the parameter ```n``` is set to zero. Considering that the k-mers are conditioned to zero bases.
 
 ```
 mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
@@ -68,7 +68,7 @@ plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,0)
 
 #### Producing (m,n)-mers 
 
-The ```k``` and ```m``` parameters are chosen by the user for mn-mer creation. For instance, ```k = 2``` and ```m = 1``` yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
+The ```m``` and ```n``` parameters are chosen by the user for mn-mer creation. For instance, ```m = 1``` and ```m = 1``` yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
 
 ```
 mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,1)
