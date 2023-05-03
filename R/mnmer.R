@@ -14,9 +14,9 @@
 #' 
 #' @examples
 #' dir <-system.file("extdata", package="mnmer")
-#' mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
+#' human <- readDNAStringSet(file.path(dir, "human_vir.fasta.gz")
+#' human_02mer <- mnmer(human,2,0)
 #' 
-
 mnmer <- function (seqs, m, n) 
 {
     m <- as.integer(m)
@@ -44,39 +44,3 @@ mnmer <- function (seqs, m, n)
 
     return(tab)
 }
-
-
-
-readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.02)
-{
-    if (!file.exists(FASTAfile)) 
-        stop(paste0("File: ", FASTAfile, " does not found!"))
-    if (!rand) {
-        seqs <- readDNAStringSet(FASTAfile)
-        seqid <- c()
-        tab <- data.frame()
-        maxsize <- ifelse(size == 0, length(seqs), size)
-        dsqs <- DNAStringSet()
-        for (i in 1:maxsize) {
-            ni <- alphabetFrequency(seqs[i], baseOnly = TRUE, 
-                as.prob = TRUE)
-            if (ni[5] < pni) {
-                dsqs <- c(dsqs, seqs[i])
-            }
-            else {
-                message("Warning: ", names(seqs)[i], " has a proportion of N + IUPAC bases = ", 
-                  ni[5])
-            }
-        }
-        return(dsqs)
-    }
-    fasstr <- .Call("readrandFASTA", FASTAfile, size, pni)
-    fastab <- read.table(text = fasstr, header = FALSE, sep = "\t")
-    dsqs <- DNAStringSet(fastab[, 2])
-    names(dsqs) <- fastab[, 1]
-    return(dsqs)
-}
-
-
-
-
