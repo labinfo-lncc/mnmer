@@ -1,5 +1,5 @@
 ---
-title: "(m,n)-mer - A Simple and New Statistical Feature for viral Classification"
+title: "(m,n)-mer - A Simple Statistical Feature for Sequence Classification"
 author:
 - name: Amanda Araújo Serrão de Andrade
   affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
@@ -14,80 +14,54 @@ package: mnmer
 output:
   BiocStyle::html_document
 abstract: |
-  The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we present the mnmer function and show a pratical example of classification using mnmer output.
+  The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we introduce the readNumFASTA and mnmer function, demonstrating its practical application in supervised classification.
 vignette: |
-  %\VignetteIndexEntry{(m,n)-mer - A Simple and New Statistical Feature for viral Classification}
+  %\VignetteIndexEntry{(m,n)-mer - A Simple Statistical Feature for Sequence Classification}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[UTF-8]{inputenc}
 ---
   
 \section{Introduction to the (m,n)-mer concept}
 
-The (m,n)-mer R package was created to summarize biological data into numerical characteristics, as an alternative for k-mers. It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. The feature matrix for classification is created by combining its output with class information.
+The (m,n)-mer is a k-mer variant that expresses conditional probabilities instead of unconditional ones (Figure 1). Our proposal suggests using the relative frequency of an n-mer conditioned to its preceding m-mer, rather than the unconditional k-mer frequency. When m+n=k, this new feature has an identical size and range to k-mer. 
 
-Since letters are a bit awkward from a mathematical viewpoint, lets univocally associate the digits $0$, $1$, $2$ and $3$ to letters A, C, G and T. Any order will do. Hence, each k-mer can be described by a unique base-4 integer number in the range from $0$ to $4.k-1$. As an example, consider the 6-mer ACCTGA and the association described above. Then the 6-mer ACCTGA can be represented as the base-4 number $011320$, which corresponds to the number $376$ in the decimal notation. 
-
-If we order all the k-mers according to these numbers, we say the k-mers are “lexicographically” ordered and we can use the notation $s_{m}^{i}$ to identify the k-mer associated to the decimal number $i$ ranging from $0$ to $4.k-1$. Following the above example, we can say that  $s^{376}_{6}=ACCTGA$.
-
-Let’s now consider a particular genome extracted from a particular organism and assume that we count the occurrence of all distinct k-mers present in this genome. We will denote by $c_{m}^{i}$ the count corresponding to the i-th k-mer. Then we can create a real vector of size $4.k$ as illustrated in the Figure 1 below: 
-  
 \begin{figure*}
 \includegraphics[keepaspectratio,width=12cm]{\jobname-Fig1.png}
-\raggedright
-\caption{\label{fig:wide}k-mer organization for k-mer and (m,n)-mer statistical distributions evaluation.}
-\end{figure*}
-
-Since this counting is generally made for several organisms with different sizes, for the sake of comparison it is more convenient express this count in relative terms. Similarly, we will denote by  as $f_{m}^{i}$ the relative frequency of k-mer $s_{m}^{i}$   which is computed as the division $f_{m}^{i}=\frac{c_{m}^{i}}{N_{m}}$   where ${N_{m}}$  is the total number of k-mers counted in this organism, that is, ${N_{m}}=\sum_{i=0}^{4^{m}-1}c_{m}^{i}$.
-
-Let’s define a vector $\underline{f}_{m}=(f_{m}^{0},f_{m}^{1},...,f_{m}^{4^{m}-1})$   as the formal descriptor of the particular organism as far as k-mer is concerned. 
-
-Please notice that each element of vector $\underline{f}_{m}$ is nonnegative and their sum is 1, which allow us to interpret this vector as a “probability density distribution” according to  statistical parlance.  
-
-In the above example, consider the 6-mer ACCTGA and m and n respectively assuming the values 4 and 2. Hence we have $S_{6}=ACCTGA$ , $S_{4}^{-}=ACCT$ and $S_{2}^{+}=GA$ .
-Although we have used the superscripts – and + to respectively indicate the left and right part of the k-mer  $S_{m}$, they are also an m-mer and an n-mer on its own.
-We propose the replacement of the unconditional frequency $f_{m}^{i}$ by the conditional frequency  $f_{m,n}^{i}$ which represents the relative frequency of the n-mer $S_{n}^{+}$ conditioned to the fact that the set of m bases that precedes it is $S_{m}^{-}$. The vector  so defined will be conveniently renamed $\underline{f}_{m,n}$ in order to be more explicit. By defining  $u/v$ as the result of the integer division of $u$ by $v$ then, based upon the classical result of conditional probabilities, we have $\underline{f}_{m,n}=(f_{m,n}^{0},f_{m,n}^{1},...,f_{m,n}^{4^{m}-1})$  where $f_{m,n}^{i}=\frac{f_{m}^{i]}}{f_{m}^{i/4^n}}$.
-
-Again in our example, $f_{6}^{376}$, the relative frequency of 6-mer  ACCTGA must be divided by $f_{4}^{23}$, which is the relative frequency of $S_{4}^{23}=ACCT$ .
-
-It can be easily seen that the sum all elements of this new vector is no longer 1 but $4m$, because it is the concatenation of $4m$ conditional frequency distributions associated to each one of the possible m-mers. This fact has no impact whatsoever in our current discussion but, in order to keep it as a probability density distribution as well, we normalize it by dividing it by $4m$. Figure 2 shows an comparison of k-mers and (m,n)-mers obtained from the same nucleotide sequence. 
-
-\begin{figure*}
-\includegraphics[keepaspectratio,width=12cm]{\jobname-Fig2.png}
 \raggedright
 \caption{\label{fig:wide}Comparing k-mer to mn-mer relative frequency.}
 \end{figure*}
 
-According to Figure 3 below, the k-mers are represented as (0,k) and the (m,n)-mers as (m,n).
+Here, we consider k-mers as an particular case of (m,n)-mers, where k-mers are specifically (0,k)-mers (Figure 2). All other (m,n)-mers that share the same size and range as a k-mer can be categorized as follows: (1,k-1), (2,k-2), up to (k-1,1). For instance, the following three m-n mers:  (1,3)-mer, (2,2)-mer and (3, 1)-mer all have the same characteristics as their related k-mer, which is in this case the (0,4)-mer.
 
 \begin{figure*}
-\includegraphics[keepaspectratio,width=12cm]{\jobname-Fig3.png}
+\includegraphics[keepaspectratio,width=12cm]{\jobname-Fig2.png}
 \raggedright
 \caption{\label{fig:wide}Numeric representation.}
 \end{figure*}
 
-The output table (Figure 4) includes the fasta file accession numbers as an ID column, the relative frequency of mn-mers up to $4.k$ columns, and class information.
-
-\begin{figure*}
-\includegraphics[keepaspectratio,width=12cm]{\jobname-Fig4.png}
-\raggedright
-\caption{\label{fig:wide}Output example.}
-\end{figure*}
-
-For more details and performance comparison, please see Andrade et al., 2022 (in press).
+For more methodological details and feature performance comparison in binary, multiclass and clustering classifications, please see Andrade et al., 2022 (in press).
 \newpage
 
 \section{The (m,n)-mer as an R package}
 \begin{figure*}
-\includegraphics[keepaspectratio,width=12cm]{\jobname-Fig5.png}
+\includegraphics[keepaspectratio,width=12cm]{\jobname-Fig4.png}
 \raggedright
 \caption{\label{fig:wide}Package logo}
 \end{figure*}
 
-The \Githubpkg{labinfo-lncc/mnmer} R package was created to summarize biological data into numerical characteristics. It accepts a FASTA file and generates a dataframe that describes the frequency of all (m,n)-mers identified in the input sequences. This output is coupled with class information to create a feature matrix. 
+The \Githubpkg{labinfo-lncc/mnmer} R package is used to summarize biological data by generating a table that shows the conditional frequency distribution of selected (m,n)-mers in FASTA files. This is an alternative to using k-mers for numerical characterization. By combining this output with class information, a feature matrix suitable for classification is created.
+
+The output table (Figure 4) includes the FASTA file accession numbers as an ID column, the relative frequency of (m,n)-mers up to $4.k$ columns, and class information.
+
+\begin{figure*}
+\includegraphics[keepaspectratio,width=12cm]{\jobname-Fig3.png}
+\raggedright
+\caption{\label{fig:wide}Output example.}
+\end{figure*}
 
 \subsection{Dependencies}
 
-The package needs \R{} 4.0.0 or later, Biostrings and Utils.
+The package needs R(>= 4.2.0), Biostrings(>= 3.1) and Utils(>= 2.0.0).
 
 \subsection{Instalation}
 
@@ -98,31 +72,47 @@ library(devtools)
 install_github("labinfo-lncc/mnmer", ref="main")
 ```
 
+\subsection{The readNumFASTA function}
+
+This function employs Biostrings for reading FASTA files into the R system. It enables users to limit the number of sequences loaded, select sequences at random, and set a non-ACTG base cutoff percentage.
+
+The parameters are:
+
+`FASTAfile` = It could be a multiFASTA. 
+
+`size` = Number of sequences to be loaded. 
+
+`rand` = Select sequences randomly or not. Set TRUE or FALSE
+
+`pni` = Percentage of non-ACTG (default = 0.20)
+
+As default, all sequences more than 20% of N + IUPAC bases will be removed from further analysis given the little informative nature of those bases. In that case, the `mnmer` function prints the following warning:
+  
+```{r, echo=FALSE}
+score <- 30
+paste0("Warning: Sequence has a proportion of N + IUPAC bases = ", score, "%")
+```
+
+If the user would like to accept these sequences, the `pni` parameter should be set to 0.00
+
+The `readNumFASTA` function returns an DNAStringSet data structure, used by the `mnmer` in further analysis. To learn more about DNAStringSet please check Biostrings documentation. 
+
 \subsection{The mnmer function}
 
 The main function of this package is the `mnmer` function. It creates dataframes with the conditional probability.
-By invoking the function  `cmmer` from the C++ script, this function can create both k-mers and (m,n)-mers.
+By invoking the function `cmmer` from the C++ script, this function can create both k-mers and (m,n)-mers.
 
 The parameters receives:
   
-`file` = file = FASTA file. It could be a multiFASTA. This file can be .gz compressed or not. 
+`seqs` = DNAStringSet object
 
 `m` = Value of k for k-mer generation. Needs to be different from zero. 
 
 `n` = Value of m for (m,n)-mer generation in the format of (m, k-m). In case of k-mer generation, m should be zero as (0,k).
 
-As default, all sequences with high content of N + IUPAC bases will be removed from further analysis given the little informative nature of those bases. In that case, the mnmer function prints the following warning:
-  
-```{r, echo=FALSE}
-score <- 10
-paste0("Warning: Sequence has a proportion of N + IUPAC bases = ", score, "%")
-```
-  
 \subsection{Pratical example}
 
-The mnmer function generates a independent feature matrix that may be used to conduct clustering or classification. 
-
-Assume we need to distinguish between viruses that only replicate in mosquito and viruses that only replicate in plants. The corresponding FASTA files can be found in the extdata folder.
+Assume we need to classify viruses that infect human from viruses that infect plants. The corresponding FASTA files can be found in the extdata folder.
 
 After package installation, the user should run: 
   
@@ -131,13 +121,22 @@ library("mnmer")
 dir <-system.file("extdata", package="mnmer")
 ```
 
+\subsubsection{Load sequences in to R system}
+
+From the `readNumFASTA` function we load biological sequences into R system as an DNAStringSet structure. In our practical example, we would like to load 1,000 random sequences per FASTA. These sequences must have less than 50% of non-ACTG bases. We should run:
+
+```{r, eval=TRUE}
+human <-readNumFASTA((file.path(dir, "human_vir.fasta.gz")), 1000,TRUE,0.50)
+plant <-readNumFASTA((file.path(dir, "plant_vir.fasta.gz")), 1000,TRUE,0.50)
+```
+
 \subsubsection{Produce k-mer distributions}
 
 For k-mer generation, the parameter k is set to choice, while the parameter m is set to zero. Given that the k-mers have been conditioned to zero bases.
 
 ```{r, eval=FALSE}
-mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
-plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,0)
+human_02mer <- mnmer(human,2,0)
+plant_02mer <- mnmer(plant,2,0)
 ```
 
 \subsubsection{Produce (m,n)-mer distributions}
@@ -147,8 +146,8 @@ The user specifies the k and m parameters for (mn)-mer generation.
 For example, k = 2 and m = 1 produce the (1,1)-mer, in which one base is conditioned on the frequency of the base before it. Bases other than A, C, T, and G were disregarded.
 
 ```{r, eval=FALSE}
-mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,1)
-plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,1)
+human_21mer <- mnmer(human,2,1)
+plant_21mer <- mnmer(plant,2,1)
 ```
 
 Here, we utilize the (1,1)-mer feature matrices generated by the mnmer to run an classification using Caret and MLeval.
@@ -162,11 +161,11 @@ To execute the example, enter the following code:
 ```{r, eval=FALSE}
 library(caret)
 # Add class information 
-classes <- replicate(nrow(mosquito), "mosquito.vir")
-featureMatrix_mosquito <- cbind(mosquito,classes)
-classes <- replicate(nrow(plant), "plant.vir")
-featureMatrix_plant <- cbind(plant,classes)
-featureMatrix <- rbind(featureMatrix_mosquito, featureMatrix_plant)
+classes <- replicate(nrow(human_21mer), "human.vir")
+featureMatrix_human_21mer <- cbind(human_21mer,classes)
+classes <- replicate(nrow(plant_21mer), "plant.vir")
+featureMatrix_plant_21mer <- cbind(plant_21mer,classes)
+featureMatrix <- rbind(featureMatrix_human_21mer, featureMatrix_plant_21mer)
 featureMatrix <- subset(featureMatrix, select = -c(seqid))
 
 # Machine Learning
