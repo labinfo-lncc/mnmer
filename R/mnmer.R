@@ -14,7 +14,7 @@
 #' 
 #' @examples
 #' dir <-system.file("extdata", package="mnmer")
-#' human <- readDNAStringSet(file.path(dir, "human_vir.fasta.gz")
+#' human <- readDNAStringSet(file.path(dir, "human_vir.fasta.gz"))
 #' human_02mer <- mnmer(human,2,0)
 #' 
 mnmer <- function (seqs, m, n) 

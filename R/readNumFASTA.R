@@ -15,7 +15,7 @@
 #' 
 #' @examples
 #'dir <-system.file("extdata", package="mnmer")
-#'human <-readNumFASTA((file.path(dir, "human_vir.fasta.gz")), 1000,TRUE,0.50)
+#'human <-readNumFASTA((file.path(dir, "human_vir.fasta.gz")),1000,TRUE,0.50)
 #' 
 
 readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.20)
