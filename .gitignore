@@ -31,3 +31,4 @@ unsrturl.bst
 .Rproj.user
 ./src/mnmercpp.o
 ./src/mnmercpp.so
+.vscode/

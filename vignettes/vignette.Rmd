@@ -12,15 +12,15 @@ author:
 email: atrv@lncc.br
 package: mnmer
 output:
-  BiocStyle::html_document
-abstract: |
+   html_document
+abstract: >
   The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we introduce the readNumFASTA and mnmer function, demonstrating its practical application in supervised classification.
-vignette: |
+vignette: >
   %\VignetteIndexEntry{(m,n)-mer - A Simple Statistical Feature for Sequence Classification}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{rmarkdown}
   %\usepackage[UTF-8]{inputenc}
 ---
-  
+
 \section{Introduction to the (m,n)-mer concept}
 
 The (m,n)-mer is a k-mer variant that expresses conditional probabilities instead of unconditional ones (Figure 1). Our proposal suggests using the relative frequency of an n-mer conditioned to its preceding m-mer, rather than the unconditional k-mer frequency. When m+n=k, this new feature has an identical size and range to k-mer. 
@@ -116,7 +116,7 @@ Assume we need to classify viruses that infect human from viruses that infect pl
 
 After package installation, the user should run: 
   
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 library("mnmer")
 dir <-system.file("extdata", package="mnmer")
 ```
@@ -125,7 +125,7 @@ dir <-system.file("extdata", package="mnmer")
 
 From the `readNumFASTA` function we load biological sequences into R system as an DNAStringSet structure. In our practical example, we would like to load 1,000 random sequences per FASTA. These sequences must have less than 50% of non-ACTG bases. We should run:
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 human <-readNumFASTA((file.path(dir, "human_vir.fasta.gz")), 1000,TRUE,0.50)
 plant <-readNumFASTA((file.path(dir, "plant_vir.fasta.gz")), 1000,TRUE,0.50)
 ```
