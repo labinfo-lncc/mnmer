@@ -115,13 +115,9 @@ test <- featureMatrix[-train_index, ]
 control <- trainControl(method="cv", summaryFunction=twoClassSummary, classProbs=T, savePredictions = T)
 roc <- train(classes ~ ., data=train, method="rf", preProc=c("center"), trControl=control)
 res <- evalm(roc) # Make the ROC plot
-
 ```
 
-This classification produces the ROC curve and metrics shown below:
-
-
-![Rplot01](https://user-images.githubusercontent.com/57667417/191288837-2f13cee0-96f8-48fb-a4e0-e7e28d832efe.png)
+This classification produces the metrics shown below:
 
 
 Metrics | Value
@@ -131,11 +127,7 @@ ROC | 1.0000
 Sensibility | 0.9500
 Specificity | 1.0000
 
-## Citation
-
-All data used in this project are stored at: https://biotools.labinfo.lncc.br/mnmer/ 
-
-
 ## Work in progress
 
 If you have any queries or find a bug, please submit an issue on GitHub or email atrv@lncc.br.
+
