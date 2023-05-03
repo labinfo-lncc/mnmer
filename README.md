@@ -34,9 +34,7 @@ The output table (Figure 3) includes the fasta file accession numbers as an ID c
 ## Dependencies
 
 ```
-R version 4.0.0 or later
-Biostrings
-Utils
+The package needs R(>= 4.2.0), Biostrings(>= 3.1) and Utils(>= 2.0.0).
 ```
 
 ## Installation
@@ -55,15 +53,36 @@ library("mnmer")
 dir <-system.file("extdata", package="mnmer")
 ```
 
-Assume we need to distinguish between viruses detected in mosquito samples and viruses that exclusively infect plants. The mn function generates the feature matrix using conditional probability from the datasets mosquito vir.fasta and plant vir.fasta. This function can generate both k-mers and mn-mers.
+Assume we need to distinguish between viruses that infect human and viruses that exclusively infect plants. 
+
+The ```readNumFASTA``` function employs Biostrings for reading FASTA files into the R system. It enables users to limit the number of sequences loaded, select sequences at random, and set a non-ACTG base cutoff percentage.
+
+The parameters are:
+
+```FASTAfile``` = It could be a multiFASTA. 
+
+```size``` = Number of sequences to be loaded. 
+
+```rand``` = Select sequences randomly or not. Set TRUE or FALSE
+
+```pni``` = Percentage of non-ACTG (default = 0.20)
+
+As default, all sequences more than 20% of N + IUPAC bases will be removed from further analysis given the little informative nature of those bases. If the user would like to accept these sequences, the ```pni``` parameter should be set to 0.00. The ```readNumFASTA``` function returns an DNAStringSet data structure, used by the ```mnmer``` in further analysis. To learn more about DNAStringSet please check Biostrings documentation. 
+
+```
+human <-readNumFASTA((file.path(dir, "human_vir.fasta.gz")), 1000,TRUE,0.50)
+plant <-readNumFASTA((file.path(dir, "plant_vir.fasta.gz")), 1000,TRUE,0.50)
+```
 
 #### Producing k-mers
 
+The ```mnmer``` function generates the feature matrix using conditional probability from DNAStringSet objects. 
+This function can generate both k-mers and mn-mers.
 The parameter ```m``` is set to choice for k-mer generation, while the parameter ```n``` is set to zero. Considering that the k-mers are conditioned to zero bases.
 
 ```
-mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta.gz"),2,0)
-plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,0)
+human_02mer <- mnmer(human,2,0)
+plant_02mer <- mnmer(plant,2,0)
 ```
 
 #### Producing (m,n)-mers 
@@ -71,11 +90,9 @@ plant <- mnmer(file.path(dir, "plant_vir.fasta.gz"),2,0)
 The ```m``` and ```n``` parameters are chosen by the user for mn-mer creation. For instance, ```m = 1``` and ```m = 1``` yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.
 
 ```
-mosquito <- mnmer(file.path(dir, "mosquito_vir.fasta"),2,1)
-plant <- mnmer(file.path(dir, "plant_vir.fasta"),2,1)
+human_21mer <- mnmer(human,2,1)
+plant_21mer <- mnmer(plant,2,1)
 ```
-
-All sequences with N + IUPAC bases content higher than 10% are removed from further analysis.
 
 For classification outside of the mnmer program, we utilize the (1,1)-mer feature matrices. Here's a real-world example of code:
 
@@ -85,12 +102,12 @@ library(data.table)
 library(caret)
 library(MLeval)
 
-classes <- replicate(nrow(mosquito), "mosquito.vir")
-featureMatrix_mosquito <- cbind(mosquito,classes)
-classes <- replicate(nrow(plant), "plant.vir")
-featureMatrix_plant <- cbind(plant,classes)
+classes <- replicate(nrow(human_21mer), "human.vir")
+featureMatrix_human <- cbind(human_21mer,classes)
+classes <- replicate(nrow(plant_21mer), "plant.vir")
+featureMatrix_plant <- cbind(plant_21mer,classes)
 
-featureMatrix <- rbind(featureMatrix_mosquito, featureMatrix_plant)
+featureMatrix <- rbind(featureMatrix_human, featureMatrix_plant)
 featureMatrix <- subset(featureMatrix, select = -c(seqid))
 train_index <- createDataPartition(featureMatrix$classes, p=0.8, list=FALSE)
 train <- featureMatrix[train_index, ]
