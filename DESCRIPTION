@@ -23,6 +23,6 @@ Suggests:
     caret,
     MLeval,
     randomForest
-Depends: R(>= 4.2.0), utils, Biostrings
+Depends: R(>= 4.1.0), utils, Biostrings
 biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI  
 Config/testthat/edition: 3

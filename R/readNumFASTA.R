@@ -3,9 +3,9 @@
 #' @description Load data in to the R system. 
 #'
 #' @param FASTAfile Path to a multifasta file \code{FASTAfile}
-#' @param size Number of sequences loaded \code{size}
-#' @param rand Sequences choose at random or not. TRUE or FALSE \code{rand}
-#' @param pni Cutoff percentage of non-ACTG bases in the sequences \code{pni}
+#' @param size Number of sequences to be loaded \code{size}
+#' @param rand Sequences choose mode random or not. TRUE or FALSE \code{rand}
+#' @param pni Cutoff percentage for maximum of non-ACTG bases in the sequences \code{pni}
 #'
 #' @return DNAStringSet object
 #'
@@ -15,7 +15,7 @@
 #' 
 #' @examples
 #'dir <-system.file("extdata", package="mnmer")
-#'human <-readNumFASTA((file.path(dir, "human_vir.fasta.gz")),1000,TRUE,0.50)
+#'human <-readNumFASTA((file.path(dir, "human_vir.fasta")), 10, TRUE, 0.50))
 #' 
 
 readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.20)
@@ -41,7 +41,12 @@ readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.20)
         }
         return(dsqs)
     }
+
     fasstr <- .Call("readrandFASTA", FASTAfile, size, pni)
+
+    if (fasstr == "101")
+        stop ("ERROR: Number of random dataset size is greater than the FASTA file dataset!")
+
     fastab <- read.table(text = fasstr, header = FALSE, sep = "\t")
     dsqs <- DNAStringSet(fastab[, 2])
     names(dsqs) <- fastab[, 1]
