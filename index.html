@@ -50,7 +50,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/vignette.html">(m,n)-mer - A Simple and New Statistical Feature for viral Classification</a>
+      <a href="articles/vignette.html">(m,n)-mer - A Simple Statistical Feature for Sequence Classification</a>
     </li>
   </ul>
 </li>
@@ -91,9 +91,7 @@
 <div class="section level2">
 <h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
 </h2>
-<pre><code>R version 4.0.0 or later
-Biostrings
-Utils</code></pre>
+<pre><code>The package needs R(&gt;= 4.2.0), Biostrings(&gt;= 3.1) and Utils(&gt;= 2.0.0).</code></pre>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -107,33 +105,41 @@ Utils</code></pre>
 </h2>
 <pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"mnmer"</span><span class="op">)</span></span>
 <span><span class="va">dir</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"mnmer"</span><span class="op">)</span></span></code></pre>
-<p>Assume we need to distinguish between viruses detected in mosquito samples and viruses that exclusively infect plants. The mn function generates the feature matrix using conditional probability from the datasets mosquito vir.fasta and plant vir.fasta. This function can generate both k-mers and mn-mers.</p>
+<p>Assume we need to distinguish between viruses that infect human and viruses that exclusively infect plants.</p>
+<p>The <code>readNumFASTA</code> function employs Biostrings for reading FASTA files into the R system. It enables users to limit the number of sequences loaded, select sequences at random, and set a non-ACTG base cutoff percentage.</p>
+<p>The parameters are:</p>
+<p><code>FASTAfile</code> = It could be a multiFASTA.</p>
+<p><code>size</code> = Number of sequences to be loaded.</p>
+<p><code>rand</code> = Select sequences randomly or not. Set TRUE or FALSE</p>
+<p><code>pni</code> = Percentage of non-ACTG (default = 0.20)</p>
+<p>As default, all sequences more than 20% of N + IUPAC bases will be removed from further analysis given the little informative nature of those bases. If the user would like to accept these sequences, the <code>pni</code> parameter should be set to 0.00. The <code>readNumFASTA</code> function returns an DNAStringSet data structure, used by the <code>mnmer</code> in further analysis. To learn more about DNAStringSet please check Biostrings documentation.</p>
+<pre><code><span><span class="va">human</span> <span class="op">&lt;-</span><span class="fu"><a href="reference/readNumFASTA.html">readNumFASTA</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"human_vir.fasta.gz"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1000</span>,<span class="cn">TRUE</span>,<span class="fl">0.50</span><span class="op">)</span></span>
+<span><span class="va">plant</span> <span class="op">&lt;-</span><span class="fu"><a href="reference/readNumFASTA.html">readNumFASTA</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta.gz"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1000</span>,<span class="cn">TRUE</span>,<span class="fl">0.50</span><span class="op">)</span></span></code></pre>
 <div class="section level4">
 <h4 id="producing-k-mers">Producing k-mers<a class="anchor" aria-label="anchor" href="#producing-k-mers"></a>
 </h4>
-<p>The parameter <code>m</code> is set to choice for k-mer generation, while the parameter <code>n</code> is set to zero. Considering that the k-mers are conditioned to zero bases.</p>
-<pre><code><span><span class="va">mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mosquito_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span>
-<span><span class="va">plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span></code></pre>
+<p>The <code>mnmer</code> function generates the feature matrix using conditional probability from DNAStringSet objects. This function can generate both k-mers and mn-mers. The parameter <code>m</code> is set to choice for k-mer generation, while the parameter <code>n</code> is set to zero. Considering that the k-mers are conditioned to zero bases.</p>
+<pre><code><span><span class="va">human_02mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="va">human</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">plant_02mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="va">plant</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="producing-mn-mers">Producing (m,n)-mers<a class="anchor" aria-label="anchor" href="#producing-mn-mers"></a>
 </h4>
 <p>The <code>m</code> and <code>n</code> parameters are chosen by the user for mn-mer creation. For instance, <code>m = 1</code> and <code>m = 1</code> yield the (1,1)-mer, in which one base is conditioned on the frequency of one preceding base.</p>
-<pre><code><span><span class="va">mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mosquito_vir.fasta"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre>
-<p>All sequences with N + IUPAC bases content higher than 10% are removed from further analysis.</p>
+<pre><code><span><span class="va">human_21mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="va">human</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">plant_21mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="va">plant</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre>
 <p>For classification outside of the mnmer program, we utilize the (1,1)-mer feature matrices. Here’s a real-world example of code:</p>
 <pre><code><span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">MLeval</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mosquito</span><span class="op">)</span>, <span class="st">"mosquito.vir"</span><span class="op">)</span></span>
-<span><span class="va">featureMatrix_mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">mosquito</span>,<span class="va">classes</span><span class="op">)</span></span>
-<span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">plant</span><span class="op">)</span>, <span class="st">"plant.vir"</span><span class="op">)</span></span>
-<span><span class="va">featureMatrix_plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">plant</span>,<span class="va">classes</span><span class="op">)</span></span>
+<span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">human_21mer</span><span class="op">)</span>, <span class="st">"human.vir"</span><span class="op">)</span></span>
+<span><span class="va">featureMatrix_human</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">human_21mer</span>,<span class="va">classes</span><span class="op">)</span></span>
+<span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">plant_21mer</span><span class="op">)</span>, <span class="st">"plant.vir"</span><span class="op">)</span></span>
+<span><span class="va">featureMatrix_plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">plant_21mer</span>,<span class="va">classes</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">featureMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">featureMatrix_mosquito</span>, <span class="va">featureMatrix_plant</span><span class="op">)</span></span>
+<span><span class="va">featureMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">featureMatrix_human</span>, <span class="va">featureMatrix_plant</span><span class="op">)</span></span>
 <span><span class="va">featureMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">featureMatrix</span>, select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">seqid</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">train_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/createDataPartition.html" class="external-link">createDataPartition</a></span><span class="op">(</span><span class="va">featureMatrix</span><span class="op">$</span><span class="va">classes</span>, p<span class="op">=</span><span class="fl">0.8</span>, list<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">train</span> <span class="op">&lt;-</span> <span class="va">featureMatrix</span><span class="op">[</span><span class="va">train_index</span>, <span class="op">]</span></span>

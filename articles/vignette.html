@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>(m,n)-mer - A Simple and New Statistical Feature for viral Classification • mnmer</title>
+<title>(m,n)-mer - A Simple Statistical Feature for Sequence Classification • mnmer</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="(m,n)-mer - A Simple and New Statistical Feature for viral Classification">
+<script src="../pkgdown.js"></script><meta property="og:title" content="(m,n)-mer - A Simple Statistical Feature for Sequence Classification">
 <meta property="og:description" content="mnmer">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -50,7 +50,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/vignette.html">(m,n)-mer - A Simple and New Statistical Feature for viral Classification</a>
+      <a href="../articles/vignette.html">(m,n)-mer - A Simple Statistical Feature for Sequence Classification</a>
     </li>
   </ul>
 </li>
@@ -68,8 +68,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>(m,n)-mer - A Simple and New Statistical Feature
-for viral Classification</h1>
+      <h1 data-toc-skip>(m,n)-mer - A Simple Statistical Feature for
+Sequence Classification</h1>
                         <h4 data-toc-skip class="author">Amanda Araújo
 Serrão de Andrade</h4>
             <address class="author_afil">
@@ -102,167 +102,98 @@ Brazil<br><div class="hidden name"><code>vignette.Rmd</code></div>
       <p class="abstract">Abstract</p>
       <p>The (m,n)-mer is a new statistical feature based upon
       conditional frequencies (conditional probability density
-      distributions). Here, we present the mnmer function and show a
-      pratical example of classification using mnmer output.</p>
+      distributions). Here, we introduce the readNumFASTA and mnmer
+      function, demonstrating its practical application in supervised
+      classification.</p>
     </div>
     
-<p>The (m,n)-mer R package was created to summarize biological data into
-numerical characteristics, as an alternative for k-mers. It reads a
-FASTA file and generates a table describing the conditional frequency
-distribution of the selected (m,n)-mer in the sequences. The feature
-matrix for classification is created by combining its output with class
-information.</p>
-<p>Since letters are a bit awkward from a mathematical viewpoint, lets
-univocally associate the digits <span class="math inline">\(0\)</span>,
-<span class="math inline">\(1\)</span>, <span class="math inline">\(2\)</span> and <span class="math inline">\(3\)</span> to letters A, C, G and T. Any order
-will do. Hence, each k-mer can be described by a unique base-4 integer
-number in the range from <span class="math inline">\(0\)</span> to <span class="math inline">\(4.k-1\)</span>. As an example, consider the 6-mer
-ACCTGA and the association described above. Then the 6-mer ACCTGA can be
-represented as the base-4 number <span class="math inline">\(011320\)</span>, which corresponds to the number
-<span class="math inline">\(376\)</span> in the decimal notation.</p>
-<p>If we order all the k-mers according to these numbers, we say the
-k-mers are “lexicographically” ordered and we can use the notation <span class="math inline">\(s_{m}^{i}\)</span> to identify the k-mer
-associated to the decimal number <span class="math inline">\(i\)</span>
-ranging from <span class="math inline">\(0\)</span> to <span class="math inline">\(4.k-1\)</span>. Following the above example, we
-can say that <span class="math inline">\(s^{376}_{6}=ACCTGA\)</span>.</p>
-<p>Let’s now consider a particular genome extracted from a particular
-organism and assume that we count the occurrence of all distinct k-mers
-present in this genome. We will denote by <span class="math inline">\(c_{m}^{i}\)</span> the count corresponding to the
-i-th k-mer. Then we can create a real vector of size <span class="math inline">\(4.k\)</span> as illustrated in the Figure 1
-below:</p>
-<p>Since this counting is generally made for several organisms with
-different sizes, for the sake of comparison it is more convenient
-express this count in relative terms. Similarly, we will denote by as
-<span class="math inline">\(f_{m}^{i}\)</span> the relative frequency of
-k-mer <span class="math inline">\(s_{m}^{i}\)</span> which is computed
-as the division <span class="math inline">\(f_{m}^{i}=\frac{c_{m}^{i}}{N_{m}}\)</span> where
-<span class="math inline">\({N_{m}}\)</span> is the total number of
-k-mers counted in this organism, that is, <span class="math inline">\({N_{m}}=\sum_{i=0}^{4^{m}-1}c_{m}^{i}\)</span>.</p>
-<p>Let’s define a vector <span class="math inline">\(\underline{f}_{m}=(f_{m}^{0},f_{m}^{1},...,f_{m}^{4^{m}-1})\)</span>
-as the formal descriptor of the particular organism as far as k-mer is
-concerned.</p>
-<p>Please notice that each element of vector <span class="math inline">\(\underline{f}_{m}\)</span> is nonnegative and
-their sum is 1, which allow us to interpret this vector as a
-“probability density distribution” according to statistical
-parlance.</p>
-<p>In the above example, consider the 6-mer ACCTGA and m and n
-respectively assuming the values 4 and 2. Hence we have <span class="math inline">\(S_{6}=ACCTGA\)</span> , <span class="math inline">\(S_{4}^{-}=ACCT\)</span> and <span class="math inline">\(S_{2}^{+}=GA\)</span> . Although we have used the
-superscripts – and + to respectively indicate the left and right part of
-the k-mer <span class="math inline">\(S_{m}\)</span>, they are also an
-m-mer and an n-mer on its own. We propose the replacement of the
-unconditional frequency <span class="math inline">\(f_{m}^{i}\)</span>
-by the conditional frequency <span class="math inline">\(f_{m,n}^{i}\)</span> which represents the relative
-frequency of the n-mer <span class="math inline">\(S_{n}^{+}\)</span>
-conditioned to the fact that the set of m bases that precedes it is
-<span class="math inline">\(S_{m}^{-}\)</span>. The vector so defined
-will be conveniently renamed <span class="math inline">\(\underline{f}_{m,n}\)</span> in order to be more
-explicit. By defining <span class="math inline">\(u/v\)</span> as the
-result of the integer division of <span class="math inline">\(u\)</span>
-by <span class="math inline">\(v\)</span> then, based upon the classical
-result of conditional probabilities, we have <span class="math inline">\(\underline{f}_{m,n}=(f_{m,n}^{0},f_{m,n}^{1},...,f_{m,n}^{4^{m}-1})\)</span>
-where <span class="math inline">\(f_{m,n}^{i}=\frac{f_{m}^{i]}}{f_{m}^{i/4^n}}\)</span>.</p>
-<p>Again in our example, <span class="math inline">\(f_{6}^{376}\)</span>, the relative frequency of
-6-mer ACCTGA must be divided by <span class="math inline">\(f_{4}^{23}\)</span>, which is the relative
-frequency of <span class="math inline">\(S_{4}^{23}=ACCT\)</span> .</p>
-<p>It can be easily seen that the sum all elements of this new vector is
-no longer 1 but <span class="math inline">\(4m\)</span>, because it is
-the concatenation of <span class="math inline">\(4m\)</span> conditional
-frequency distributions associated to each one of the possible m-mers.
-This fact has no impact whatsoever in our current discussion but, in
-order to keep it as a probability density distribution as well, we
-normalize it by dividing it by <span class="math inline">\(4m\)</span>.
-Figure 2 shows an comparison of k-mers and (m,n)-mers obtained from the
-same nucleotide sequence.</p>
-<p>According to Figure 3 below, the k-mers are represented as (0,k) and
-the (m,n)-mers as (m,n).</p>
-<p>The output table (Figure 4) includes the fasta file accession numbers
-as an ID column, the relative frequency of mn-mers up to <span class="math inline">\(4.k\)</span> columns, and class information.</p>
-<p>For more details and performance comparison, please see Andrade et
+<p>The (m,n)-mer is a k-mer variant that expresses conditional
+probabilities instead of unconditional ones (Figure 1). Our proposal
+suggests using the relative frequency of an n-mer conditioned to its
+preceding m-mer, rather than the unconditional k-mer frequency. When
+m+n=k, this new feature has an identical size and range to k-mer.</p>
+<p>Here, we consider k-mers as an particular case of (m,n)-mers, where
+k-mers are specifically (0,k)-mers (Figure 2). All other (m,n)-mers that
+share the same size and range as a k-mer can be categorized as follows:
+(1,k-1), (2,k-2), up to (k-1,1). For instance, the following three m-n
+mers: (1,3)-mer, (2,2)-mer and (3, 1)-mer all have the same
+characteristics as their related k-mer, which is in this case the
+(0,4)-mer.</p>
+<p>For more methodological details and feature performance comparison in
+binary, multiclass and clustering classifications, please see Andrade et
 al., 2022 (in press). </p>
-<p>The R package was created to summarize biological data into numerical
-characteristics. It accepts a FASTA file and generates a dataframe that
-describes the frequency of all (m,n)-mers identified in the input
-sequences. This output is coupled with class information to create a
-feature matrix.</p>
-<p>The package needs 4.0.0 or later, Biostrings and Utils.</p>
+<p>The R package is used to summarize biological data by generating a
+table that shows the conditional frequency distribution of selected
+(m,n)-mers in FASTA files. This is an alternative to using k-mers for
+numerical characterization. By combining this output with class
+information, a feature matrix suitable for classification is
+created.</p>
+<p>The output table (Figure 4) includes the FASTA file accession numbers
+as an ID column, the relative frequency of (m,n)-mers up to <span class="math inline">\(4.k\)</span> columns, and class information.</p>
+<p>The package needs R(&gt;= 4.2.0), Biostrings(&gt;= 3.1) and
+Utils(&gt;= 2.0.0).</p>
 <p>The user should install the package from the GitHub repository. It
 can be done by using the package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
 <span><span class="fu">install_github</span><span class="op">(</span><span class="st">"labinfo-lncc/mnmer"</span>, ref<span class="op">=</span><span class="st">"main"</span><span class="op">)</span></span></code></pre></div>
+<p>This function employs Biostrings for reading FASTA files into the R
+system. It enables users to limit the number of sequences loaded, select
+sequences at random, and set a non-ACTG base cutoff percentage.</p>
+<p>The parameters are:</p>
+<p><code>FASTAfile</code> = It could be a multiFASTA.</p>
+<p><code>size</code> = Number of sequences to be loaded.</p>
+<p><code>rand</code> = Select sequences randomly or not. Set TRUE or
+FALSE</p>
+<p><code>pni</code> = Percentage of non-ACTG (default = 0.20)</p>
+<p>As default, all sequences more than 20% of N + IUPAC bases will be
+removed from further analysis given the little informative nature of
+those bases. In that case, the <code>mnmer</code> function prints the
+following warning:</p>
+<pre><code><span><span class="co">## [1] "Warning: Sequence has a proportion of N + IUPAC bases = 30%"</span></span></code></pre>
+<p>If the user would like to accept these sequences, the
+<code>pni</code> parameter should be set to 0.00</p>
+<p>The <code>readNumFASTA</code> function returns an DNAStringSet data
+structure, used by the <code>mnmer</code> in further analysis. To learn
+more about DNAStringSet please check Biostrings documentation.</p>
 <p>The main function of this package is the <code>mnmer</code> function.
 It creates dataframes with the conditional probability. By invoking the
 function <code>cmmer</code> from the C++ script, this function can
 create both k-mers and (m,n)-mers.</p>
 <p>The parameters receives:</p>
-<p><code>file</code> = file = FASTA file. It could be a multiFASTA. This
-file can be .gz compressed or not.</p>
+<p><code>seqs</code> = DNAStringSet object</p>
 <p><code>m</code> = Value of k for k-mer generation. Needs to be
 different from zero.</p>
 <p><code>n</code> = Value of m for (m,n)-mer generation in the format of
 (m, k-m). In case of k-mer generation, m should be zero as (0,k).</p>
-<p>As default, all sequences with high content of N + IUPAC bases will
-be removed from further analysis given the little informative nature of
-those bases. In that case, the mnmer function prints the following
-warning:</p>
-<pre><code><span><span class="co">## [1] "Warning: Sequence has a proportion of N + IUPAC bases = 10%"</span></span></code></pre>
-<p>The mnmer function generates a independent feature matrix that may be
-used to conduct clustering or classification.</p>
-<p>Assume we need to distinguish between viruses that only replicate in
-mosquito and viruses that only replicate in plants. The corresponding
-FASTA files can be found in the extdata folder.</p>
+<p>Assume we need to classify viruses that infect human from viruses
+that infect plants. The corresponding FASTA files can be found in the
+extdata folder.</p>
 <p>After package installation, the user should run:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"mnmer"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Loading required package: Biostrings</span></span></code></pre>
-<pre><code><span><span class="co">## Loading required package: BiocGenerics</span></span></code></pre>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Attaching package: 'BiocGenerics'</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     IQR, mad, sd, var, xtabs</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:base':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     anyDuplicated, aperm, append, as.data.frame, basename, cbind,</span></span>
-<span><span class="co">##     colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,</span></span>
-<span><span class="co">##     get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,</span></span>
-<span><span class="co">##     match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,</span></span>
-<span><span class="co">##     Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,</span></span>
-<span><span class="co">##     table, tapply, union, unique, unsplit, which.max, which.min</span></span></code></pre>
-<pre><code><span><span class="co">## Loading required package: S4Vectors</span></span></code></pre>
-<pre><code><span><span class="co">## Loading required package: stats4</span></span></code></pre>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Attaching package: 'S4Vectors'</span></span></code></pre>
-<pre><code><span><span class="co">## The following object is masked from 'package:utils':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     findMatches</span></span></code></pre>
-<pre><code><span><span class="co">## The following objects are masked from 'package:base':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     expand.grid, I, unname</span></span></code></pre>
-<pre><code><span><span class="co">## Loading required package: IRanges</span></span></code></pre>
-<pre><code><span><span class="co">## Loading required package: XVector</span></span></code></pre>
-<pre><code><span><span class="co">## Loading required package: GenomeInfoDb</span></span></code></pre>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Attaching package: 'Biostrings'</span></span></code></pre>
-<pre><code><span><span class="co">## The following object is masked from 'package:base':</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">##     strsplit</span></span></code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dir</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"mnmer"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"mnmer"</span><span class="op">)</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"mnmer"</span><span class="op">)</span></span></code></pre></div>
+<p>From the <code>readNumFASTA</code> function we load biological
+sequences into R system as an DNAStringSet structure. In our practical
+example, we would like to load 1,000 random sequences per FASTA. These
+sequences must have less than 50% of non-ACTG bases. We should run:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">human</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/readNumFASTA.html">readNumFASTA</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"human_vir.fasta.gz"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1000</span>,<span class="cn">TRUE</span>,<span class="fl">0.50</span><span class="op">)</span></span>
+<span><span class="va">plant</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/readNumFASTA.html">readNumFASTA</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta.gz"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1000</span>,<span class="cn">TRUE</span>,<span class="fl">0.50</span><span class="op">)</span></span></code></pre></div>
 <p>For k-mer generation, the parameter k is set to choice, while the
 parameter m is set to zero. Given that the k-mers have been conditioned
 to zero bases.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mosquito_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span>
-<span><span class="va">plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">human_02mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="va">human</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">plant_02mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="va">plant</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p>The user specifies the k and m parameters for (mn)-mer
 generation.</p>
 <p>For example, k = 2 and m = 1 produce the (1,1)-mer, in which one base
 is conditioned on the frequency of the base before it. Bases other than
 A, C, T, and G were disregarded.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"mosquito_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"plant_vir.fasta.gz"</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">human_21mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="va">human</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">plant_21mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mnmer.html">mnmer</a></span><span class="op">(</span><span class="va">plant</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>Here, we utilize the (1,1)-mer feature matrices generated by the
 mnmer to run an classification using Caret and MLeval.</p>
 <p>Caret (<a href="https://topepo.github.io/caret/" class="external-link uri">https://topepo.github.io/caret/</a>) is a library of
@@ -274,14 +205,14 @@ that further regulate how the train function creates models.</p>
 <p>MLeval (<a href="https://cran.r-project.org/web/packages/MLeval/index.html" class="external-link uri">https://cran.r-project.org/web/packages/MLeval/index.html</a>)
 is used to plot performance metrics.</p>
 <p>To execute the example, enter the following code:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
 <span><span class="co"># Add class information </span></span>
-<span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mosquito</span><span class="op">)</span>, <span class="st">"mosquito.vir"</span><span class="op">)</span></span>
-<span><span class="va">featureMatrix_mosquito</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">mosquito</span>,<span class="va">classes</span><span class="op">)</span></span>
-<span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">plant</span><span class="op">)</span>, <span class="st">"plant.vir"</span><span class="op">)</span></span>
-<span><span class="va">featureMatrix_plant</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">plant</span>,<span class="va">classes</span><span class="op">)</span></span>
-<span><span class="va">featureMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">featureMatrix_mosquito</span>, <span class="va">featureMatrix_plant</span><span class="op">)</span></span>
+<span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">human_21mer</span><span class="op">)</span>, <span class="st">"human.vir"</span><span class="op">)</span></span>
+<span><span class="va">featureMatrix_human_21mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">human_21mer</span>,<span class="va">classes</span><span class="op">)</span></span>
+<span><span class="va">classes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">plant_21mer</span><span class="op">)</span>, <span class="st">"plant.vir"</span><span class="op">)</span></span>
+<span><span class="va">featureMatrix_plant_21mer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">plant_21mer</span>,<span class="va">classes</span><span class="op">)</span></span>
+<span><span class="va">featureMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">featureMatrix_human_21mer</span>, <span class="va">featureMatrix_plant_21mer</span><span class="op">)</span></span>
 <span><span class="va">featureMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">featureMatrix</span>, select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">seqid</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Machine Learning</span></span>
@@ -316,29 +247,18 @@ is used to plot performance metrics.</p>
 <span><span class="co">## tzcode source: system (glibc)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
-<span><span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
-<span><span class="co">## [8] base     </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] mnmer_0.99.1        Biostrings_2.68.0   GenomeInfoDb_1.36.0</span></span>
-<span><span class="co">## [4] XVector_0.40.0      IRanges_2.34.0      S4Vectors_0.38.0   </span></span>
-<span><span class="co">## [7] BiocGenerics_0.46.0 BiocStyle_2.28.0   </span></span>
+<span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] jsonlite_1.8.4          crayon_1.5.2            compiler_4.3.0         </span></span>
-<span><span class="co">##  [4] BiocManager_1.30.20     stringr_1.5.0           bitops_1.0-7           </span></span>
-<span><span class="co">##  [7] jquerylib_0.1.4         systemfonts_1.0.4       textshaping_0.3.6      </span></span>
-<span><span class="co">## [10] yaml_2.3.7              fastmap_1.1.1           R6_2.5.1               </span></span>
-<span><span class="co">## [13] knitr_1.42              bookdown_0.33           desc_1.4.2             </span></span>
-<span><span class="co">## [16] rprojroot_2.0.3         GenomeInfoDbData_1.2.10 bslib_0.4.2            </span></span>
-<span><span class="co">## [19] rlang_1.1.0             cachem_1.0.7            stringi_1.7.12         </span></span>
-<span><span class="co">## [22] xfun_0.39               fs_1.6.2                sass_0.4.5             </span></span>
-<span><span class="co">## [25] memoise_2.0.1           cli_3.6.1               pkgdown_2.0.7          </span></span>
-<span><span class="co">## [28] magrittr_2.0.3          zlibbioc_1.46.0         digest_0.6.31          </span></span>
-<span><span class="co">## [31] lifecycle_1.0.3         vctrs_0.6.2             evaluate_0.20          </span></span>
-<span><span class="co">## [34] glue_1.6.2              ragg_1.2.5              RCurl_1.98-1.12        </span></span>
-<span><span class="co">## [37] rmarkdown_2.21          purrr_1.0.1             tools_4.3.0            </span></span>
-<span><span class="co">## [40] htmltools_0.5.5</span></span></code></pre>
+<span><span class="co">##  [1] vctrs_0.6.2       cli_3.6.1         knitr_1.42        rlang_1.1.1      </span></span>
+<span><span class="co">##  [5] xfun_0.39         stringi_1.7.12    purrr_1.0.1       textshaping_0.3.6</span></span>
+<span><span class="co">##  [9] jsonlite_1.8.4    glue_1.6.2        rprojroot_2.0.3   htmltools_0.5.5  </span></span>
+<span><span class="co">## [13] ragg_1.2.5        sass_0.4.5        rmarkdown_2.21    evaluate_0.20    </span></span>
+<span><span class="co">## [17] jquerylib_0.1.4   fastmap_1.1.1     yaml_2.3.7        lifecycle_1.0.3  </span></span>
+<span><span class="co">## [21] memoise_2.0.1     stringr_1.5.0     compiler_4.3.0    fs_1.6.2         </span></span>
+<span><span class="co">## [25] systemfonts_1.0.4 digest_0.6.31     R6_2.5.1          magrittr_2.0.3   </span></span>
+<span><span class="co">## [29] bslib_0.4.2       tools_4.3.0       pkgdown_2.0.7     cachem_1.0.8     </span></span>
+<span><span class="co">## [33] desc_1.4.2</span></span></code></pre>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
