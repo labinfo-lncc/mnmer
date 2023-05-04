@@ -7,6 +7,7 @@
 #include <chrono>
 #include <unordered_set>
 #include <R.h>
+#include <Rinternals.h> 
 #include <Rdefines.h>
 
 using namespace std;
@@ -256,4 +257,16 @@ SEXP cmnmer (SEXP seq, SEXP mm, SEXP nn)
         return cstr;
     }
 
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"cmnmer",        (DL_FUNC) &cmnmer,        3},
+    {"readrandFASTA", (DL_FUNC) &readrandFASTA, 3},
+    {NULL, NULL, 0}
+};
+
+void R_init_mnmer(DllInfo *dll)
+{
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
