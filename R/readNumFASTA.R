@@ -3,9 +3,9 @@
 #' @description Load data in to the R system. 
 #'
 #' @param FASTAfile Path to a multifasta file \code{FASTAfile}
-#' @param size Number of sequences loaded \code{size}
-#' @param rand Sequences choose at random or not. TRUE or FALSE \code{rand}
-#' @param pni Cutoff percentage of non-ACTG bases in the sequences \code{pni}
+#' @param size Number of sequences to be loaded \code{size}
+#' @param rand Sequences choose mode random or not. TRUE or FALSE \code{rand}
+#' @param pni Cutoff percentage for maximum of non-ACTG bases in the sequences \code{pni}
 #'
 #' @return DNAStringSet object
 #'
