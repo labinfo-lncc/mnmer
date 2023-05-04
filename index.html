@@ -147,10 +147,7 @@
 <span><span class="va">control</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html" class="external-link">trainControl</a></span><span class="op">(</span>method<span class="op">=</span><span class="st">"cv"</span>, summaryFunction<span class="op">=</span><span class="va">twoClassSummary</span>, classProbs<span class="op">=</span><span class="cn">T</span>, savePredictions <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="va">roc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">classes</span> <span class="op">~</span> <span class="va">.</span>, data<span class="op">=</span><span class="va">train</span>, method<span class="op">=</span><span class="st">"rf"</span>, preProc<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>, trControl<span class="op">=</span><span class="va">control</span><span class="op">)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MLeval/man/evalm.html" class="external-link">evalm</a></span><span class="op">(</span><span class="va">roc</span><span class="op">)</span> <span class="co"># Make the ROC plot</span></span></code></pre>
-<p>This classification produces the ROC curve and metrics shown below:</p>
-<div class="figure">
-<img src="https://user-images.githubusercontent.com/57667417/191288837-2f13cee0-96f8-48fb-a4e0-e7e28d832efe.png" alt=""><p class="caption">Rplot01</p>
-</div>
+<p>This classification produces the metrics shown below:</p>
 <table class="table">
 <thead><tr class="header">
 <th>Metrics</th>
@@ -176,11 +173,6 @@
 </tbody>
 </table>
 </div>
-</div>
-<div class="section level2">
-<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
-</h2>
-<p>All data used in this project are stored at: <a href="https://biotools.labinfo.lncc.br/mnmer/" class="external-link uri">https://biotools.labinfo.lncc.br/mnmer/</a></p>
 </div>
 <div class="section level2">
 <h2 id="work-in-progress">Work in progress<a class="anchor" aria-label="anchor" href="#work-in-progress"></a>
