@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <map>
 #include <set>
@@ -168,7 +167,6 @@ map<string,string> read_fasta_rand (string file, unsigned num, int size, float p
             id = s.substr (1,s.find(" ")-1);
             seq = "";
             ++i;
-cout <<i <<'\r';
         }       
         else
             seq += s;
@@ -192,8 +190,6 @@ inline unsigned num_seqs (string &file)
     f.close();
     return n;
 }
-
-
 
 
 extern "C" {
@@ -236,16 +232,21 @@ SEXP cmnmer (SEXP seq, SEXP mm, SEXP nn)
         unsigned size = asInteger (rsize);
         float pni = asReal (rpni);
 
-        unsigned num = num_seqs (file);
-
-        map<string,string> mpse = read_fasta_rand (file, num ,size, pni);
-cout <<"Total number of sequence in the file: " <<num <<'\n';
-
         string sf = "";
 
-        for (auto p: mpse)
-            sf += p.first + "\t" + p.second + "\n";
+        unsigned num = num_seqs (file);
+
+        if (size > num)
+            sf = "101";
+        else {
         
+            map<string,string> mpse = read_fasta_rand (file, num ,size, pni);
+
+            for (auto p: mpse)
+                sf += p.first + "\t" + p.second + "\n";
+        
+        }
+
         SEXP cstr = allocVector(STRSXP, sf.size());
         
         PROTECT (cstr);
