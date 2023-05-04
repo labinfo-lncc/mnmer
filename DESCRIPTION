@@ -6,13 +6,12 @@ Authors@R: c(person(given = "Amanda",family = "Andrade", role = c("cre", "aut"),
    	person(given = "Otavio",family = "Brustolini", comment=c(ORCID="0000-0001-8132-9753"), role= "aut"),
 	person(given = "Ana",family = "Vasconcelos",comment=c(ORCID="0000-0002-4632-2086"),role = c("aut", "ths")))
 Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. This output is combined with class information to generate the feature matrix for classification. The mn function generates the feature matrix using conditional probability from the datasets. This function can generate both k-mers and mn-mers.
-License: Artistic-2.0 + file LICENSE
+License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 LinkingTo: 
     cpp11
-SystemRequirements: C++11
 VignetteBuilder: knitr
 Suggests: 
     BiocStyle,
@@ -24,5 +23,4 @@ Suggests:
     MLeval,
     randomForest
 Depends: R(>= 4.1.0), utils, Biostrings
-biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI  
-Config/testthat/edition: 3
+biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI

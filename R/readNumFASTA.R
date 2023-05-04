@@ -15,14 +15,14 @@
 #' 
 #' @examples
 #'dir <-system.file("extdata", package="mnmer")
-#'human <-readNumFASTA((file.path(dir, "human_vir.fasta")), 10, TRUE, 0.50))
+#'human <-readNumFASTA((file.path(dir, "human_vir.fasta")), 10, TRUE, 0.50)
 #' 
-
 readNumFASTA <- function (FASTAfile, size=0, rand=FALSE, pni=0.20)
 {
     if (!file.exists(FASTAfile)) 
         stop(paste0("File: ", FASTAfile, " does not found!"))
     if (!rand) {
+        utils::globalVariables(c("DNAStringSet"))
         seqs <- readDNAStringSet(FASTAfile)
         seqid <- c()
         tab <- data.frame()

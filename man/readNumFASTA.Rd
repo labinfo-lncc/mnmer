@@ -12,11 +12,11 @@ readNumFASTA(FASTAfile, size = 0, rand = FALSE, pni = 0.2)
 \arguments{
 \item{FASTAfile}{Path to a multifasta file \code{FASTAfile}}
 
-\item{size}{Number of sequences loaded \code{size}}
+\item{size}{Number of sequences to be loaded \code{size}}
 
-\item{rand}{Sequences choose at random or not. TRUE or FALSE \code{rand}}
+\item{rand}{Sequences choose mode random or not. TRUE or FALSE \code{rand}}
 
-\item{pni}{Cutoff percentage of non-ACTG bases in the sequences \code{pni}}
+\item{pni}{Cutoff percentage for maximum of non-ACTG bases in the sequences \code{pni}}
 }
 \value{
 DNAStringSet object
@@ -26,7 +26,7 @@ Load data in to the R system.
 }
 \examples{
 dir <-system.file("extdata", package="mnmer")
-human <-readNumFASTA((file.path(dir, "human_vir.fasta.gz")), 1000,TRUE,0.50)
+human <-readNumFASTA((file.path(dir, "human_vir.fasta")), 10, TRUE, 0.50)
 
 }
 \keyword{non-ACTG}

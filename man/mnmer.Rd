@@ -23,7 +23,7 @@ Generates the feature matrix using conditional probability. As default, all sequ
 }
 \examples{
 dir <-system.file("extdata", package="mnmer")
-human <- readDNAStringSet(file.path(dir, "human_vir.fasta.gz"))
+human <- readDNAStringSet(file.path(dir, "human_vir.fasta"))
 human_02mer <- mnmer(human,2,0)
 
 }
