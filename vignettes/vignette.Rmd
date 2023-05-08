@@ -1,5 +1,5 @@
 ---
-title: "(m,n)-mer - A Simple Statistical Feature for Sequence Classification"
+title: "(M,N)-mer - A Simple Statistical Feature for Sequence Classification"
 author:
 - name: Amanda Araújo Serrão de Andrade
   affiliation: National Laboratory for Scientific Computing, Bioinformatics Laboratory (LABINFO), Petrópolis, Rio de Janeiro, Brazil
