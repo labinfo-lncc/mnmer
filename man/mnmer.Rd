@@ -27,6 +27,6 @@ human <- readDNAStringSet(file.path(dir, "human_vir.fasta"))
 human_02mer <- mnmer(human,2,0)
 
 }
-\keyword{(m,n)-mer}
+\keyword{mnmer}
 \keyword{featureMatrix}
 \keyword{k-mers}
