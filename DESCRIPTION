@@ -5,7 +5,7 @@ Authors@R: c(person(given = "Amanda",family = "Andrade", role = c("cre", "aut"),
 	person(given = "Marco",family = "Grivet", comment=c(ORCID="0000-0001-5130-095X"), role = "aut"),
 	person(given = "Otavio",family = "Brustolini", comment=c(ORCID="0000-0001-8132-9753"), role= "aut"),
 	person(given = "Ana",family = "Vasconcelos",comment=c(ORCID="0000-0002-4632-2086"),role = c("aut", "ths")))
-Description: The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). From a FASTA file it is generated a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. This output is combined with class information to generate the feature matrix for classification. For detail on Methods and Benchmarking results, please see Andrade et al. (2023) - "(m,n)-mer - A Simple Statistical Feature for Sequence Classification" (currently in press)
+Description: The (m,n)-mer is a statistical feature calculated from conditional frequency distributions obtained from a FASTA file. The resulting table, along with class information, is used to create the classification feature matrix. For more information on this method and its benchmarking results, refer to Andrade et al.'s upcoming publication titled "(m,n)-mer - A Simple Statistical Feature for Sequence Classification".
 License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
