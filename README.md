@@ -5,7 +5,7 @@
 
 The (m,n)-mer R package was created to summarize biological data into numerical characteristics. It reads a FASTA file and generates a table describing the conditional frequency distribution of the selected (m,n)-mer in the sequences. This output is combined with class information to generate the feature matrix for classification.
 
-(m,n)-mers are an alternative for k-mers (Figure 1). We proposed the replacement of the unconditional k-mer frequency by the conditional frequency, which represents the relative frequency of the n-mer conditioned to f m-mer that precedes it. For more details and performance comparison, please see Andrade et al., 2022 (in press).
+(m,n)-mers are an alternative for k-mers (Figure 1). We proposed the replacement of the unconditional k-mer frequency by the conditional frequency, which represents the relative frequency of the n-mer conditioned to f m-mer that precedes it. For more details and performance comparison, please see Andrade et al., 2023 (in press).
 
 ![Fig1](https://user-images.githubusercontent.com/57667417/191081859-0b0ae464-f257-4c82-9dea-8d4629605357.png)
 
