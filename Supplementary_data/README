@@ -10,7 +10,7 @@ Nonetheless, all raw data accession numbers, fragments, and scripts used in this
 Clustering datasets
 The first dataset presents 25 clusters divided into 1,893 contigs generated from a mock community (Mockup dataset from Kang et al., 2015. Available at: http://portal.nersc.gov/dna/RD/Metagenome_RD/MetaBAT/Software/Mockup/). The second dataset has 32 clusters and 2,294 contigs from complex gut samples (Sharon et al., 2013. Available at: http://ggkbase.berkeley.edu/carrol/). The third, fourth, and fifth datasets are from the CAMI challenge (Sczyrba et al., 2017. Available at: http://portal.nersc.gov/dna/RD/Metagenome_RD/MetaBAT/Files/CAMI/) with varying levels of complexity. The Low complexity dataset has 44 clusters and 19,499 contigs; the Medium complexity dataset includes 232 clusters and 63,447 contigs while the High complexity dataset contains 1,074 clusters and 42,038 contigs.
 
-All fasta files and feature matrices are uploaded at: XXX
+All fasta files and feature matrices are uploaded at: https://biotools.labinfo.lncc.br/mnmer/
 
 References
 Alam M. and Chowdhury, U. (2020) Short K-Mer Abundance Profiles Yield Robust Machine Learning Features and Accurate Classifiers for RNA Viruses. PloS One, 15, e0239381.
