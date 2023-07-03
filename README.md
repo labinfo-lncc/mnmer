@@ -1,3 +1,4 @@
+ [![](https://cranlogs.r-pkg.org/badges/mnmer)](https://cran.r-project.org/package=mnmer)
  
 ![logo](https://user-images.githubusercontent.com/57667417/191082345-57fed066-37e9-4a8a-a65a-c9562d0625a4.png)
 
