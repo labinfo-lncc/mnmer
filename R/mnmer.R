@@ -25,7 +25,7 @@ mnmer <- function (seqs, m, n)
     if (typeof(m) !="integer" || typeof(n)!="integer" || m == 0)
         stop("ERROR: parameters m and n must be integer types and m must be different zero.")
     
-    if ((m+n) < 9)
+    if ((m+n) > 8)
         stop ("ERROR: the m + n must be lower or equal to 8")
 
     seqid <- c()
