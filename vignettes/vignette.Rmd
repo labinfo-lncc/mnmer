@@ -17,7 +17,7 @@ abstract: >
   The (m,n)-mer is a new statistical feature based upon conditional frequencies (conditional probability density distributions). Here, we introduce the readNumFASTA and mnmer function, demonstrating its practical application in supervised classification.
 vignette: >
   %\VignetteIndexEntry{(m,n)-mer - A Simple Statistical Feature for Sequence Classification}
-  %\VignetteEngine{rmarkdown}
+  %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[UTF-8]{inputenc}
 ---
 

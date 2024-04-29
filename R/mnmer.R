@@ -8,7 +8,7 @@
 #'
 #' @return Outputs a dataframe 
 #'
-#' @keywords (m,n)-mer k-mers featureMatrix
+#' @keywords mnmer kmer featureMatrix
 #'
 #' @export
 #' 

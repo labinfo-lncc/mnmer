@@ -126,3 +126,7 @@ Specificity | 1.0000
 
 If you have any queries or find a bug, please submit an issue on GitHub or email atrv@lncc.br.
 
+
+## Cite
+
+Amanda Araújo Serrão de Andrade, Marco Grivet, Otávio Brustolini, Ana Tereza Ribeiro Vasconcelos, (m, n)-mer—a simple statistical feature for sequence classification, Bioinformatics Advances, Volume 3, Issue 1, 2023, vbad088, https://doi.org/10.1093/bioadv/vbad088
