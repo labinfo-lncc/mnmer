@@ -1,11 +1,11 @@
 Package: mnmer
-Title: mnmer - A Simple Statistical Feature for Sequence Classification
+Title: Mnmer - A Simple Statistical Feature for Sequence Classification
 Version: 0.99.2
 Authors@R: c(person(given = "Amanda",family = "Andrade", role = c("cre", "aut"), comment=c(ORCID="0000-0003-3530-7435"), email = "aandradebio@gmail.com"),
 	person(given = "Marco",family = "Grivet", comment=c(ORCID="0000-0001-5130-095X"), role = "aut"),
 	person(given = "Otavio",family = "Brustolini", comment=c(ORCID="0000-0001-8132-9753"), role= "aut"),
 	person(given = "Ana",family = "Vasconcelos",comment=c(ORCID="0000-0002-4632-2086"),role = c("aut", "ths")))
-Description: The mnmer is a statistical feature calculated from conditional frequency distributions obtained from a FASTA file. The resulting table is used to create the classification feature matrix. Refer to Andrade et al. (2023) - doi: https://doi.org/10.1093/bioadv/vbad088.
+Description: The mnmer is a statistical feature calculated from conditional frequency distributions obtained from a FASTA file. The resulting table is used to create the classification feature matrix. Refer to <doi:10.1093/bioadv/vbad088>.
 License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
