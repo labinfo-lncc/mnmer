@@ -15,12 +15,7 @@ LinkingTo:
 VignetteBuilder: knitr
 Suggests: 
     BiocStyle,
-    covr,
     knitr,
-    rmarkdown,
-    testthat (>= 3.0.0),
-    caret,
-    MLeval,
-    randomForest
-Depends: R(>= 4.2.0), utils, Biostrings
+    rmarkdown
+Depends: R(>= 4.0.0), utils, Biostrings
 biocViews: Software, StatisticalMethod, FeatureExtraction, Classification, GenomeWideAssociation, GUI
